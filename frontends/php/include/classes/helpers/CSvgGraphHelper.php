@@ -542,9 +542,11 @@ class CSvgGraphHelper {
 			if ($hosts) {
 				$items = API::Item()->get([
 					'output' => [
-						'itemid', 'hostid', 'name', 'history', 'trends', 'units', 'value_type', 'valuemapid', 'key_'
+						'itemid', 'hostid', 'name', 'history', 'trends', 'units', 'delay', 'value_type', 'valuemapid',
+						'key_'
 					],
 					'selectHosts' => ['hostid', 'name'],
+					'selectPreprocessing' => ['type', 'params'],
 					'hostids' => array_keys($hosts),
 					'webitems' => true,
 					'filter' => [
@@ -575,9 +577,35 @@ class CSvgGraphHelper {
 
 				$colors = getColorVariations('#'.$data_set['color'], count($items));
 
+				$aggr_interval = ($data_set['aggregate_function'] == GRAPH_AGGREGATE_NONE)
+					? 0
+					: (int) timeUnitToSeconds($data_set['aggregate_interval']);
+
 				foreach ($items as $item) {
 					$data_set['color'] = array_shift($colors);
-					$metrics[] = $item + ['data_set' => $index, 'options' => $data_set];
+
+					$metric_frequecy = [$aggr_interval, (int) timeUnitToSeconds($item['delay'])];
+
+					foreach ($item['preprocessing'] as $preprocessing) {
+						if ($preprocessing['type'] == ZBX_PREPROC_THROTTLE_TIMED_VALUE) {
+							$metric_frequecy[] = (int) timeUnitToSeconds($preprocessing['params']);
+
+							// Only one throttling step is allowed.
+							break;
+						}
+						else if ($preprocessing['type'] == ZBX_PREPROC_THROTTLE_VALUE) {
+							$metric_frequecy = [-1];
+
+							// Only one throttling step is allowed.
+							break;
+						}
+					}
+
+					$metric_options = [
+						'frequency' => max($metric_frequecy)
+					];
+
+					$metrics[] = $item + ['data_set' => $index, 'options' => $metric_options + $data_set];
 					$max_metrics--;
 				}
 			}
