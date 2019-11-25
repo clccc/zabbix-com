@@ -236,11 +236,15 @@ class CSvgGraph extends CSvg {
 				$metrics_for_each_axes[$metric['options']['axisy']]++;
 
 				foreach ($metric['points'] as $point) {
-					if ($min_value === null || $min_value > $point['value']) {
-						$min_value = $point['value'];
-					}
-					if ($max_value === null || $max_value < $point['value']) {
-						$max_value = $point['value'];
+
+					// Point with value of null is used as a maker in denoting missing point and should not affect axis.
+					if ($point['value'] !== null) {
+						if ($min_value === null || $min_value > $point['value']) {
+							$min_value = $point['value'];
+						}
+						if ($max_value === null || $max_value < $point['value']) {
+							$max_value = $point['value'];
+						}
 					}
 
 					$this->points[$i][$point['clock']] = $point['value'];
@@ -438,7 +442,6 @@ class CSvgGraph extends CSvg {
 	 * @return CSvgGraph
 	 */
 	public function draw() {
-		$this->applyMissingDataFunc();
 		$this->calculateDimensions();
 		$this->calculatePaths();
 
@@ -813,93 +816,6 @@ class CSvgGraph extends CSvg {
 				$this->paths[$index] = $paths;
 			}
 		}
-	}
-
-	/**
-	 * Modifies metric data and Y value range according specified missing data function.
-	 */
-	protected function applyMissingDataFunc() {
-		foreach ($this->metrics as $index => $metric) {
-			/**
-			 * - Missing data points are calculated only between existing data points;
-			 * - Missing data points are not calculated for SVG_GRAPH_TYPE_POINTS && SVG_GRAPH_TYPE_BAR metrics;
-			 * - SVG_GRAPH_MISSING_DATA_CONNECTED is default behavior of SVG graphs, so no need to calculate anything
-			 *   here.
-			 */
-			if (array_key_exists($index, $this->points)
-					&& !in_array($metric['options']['type'], [SVG_GRAPH_TYPE_POINTS, SVG_GRAPH_TYPE_BAR])
-					&& $metric['options']['missingdatafunc'] != SVG_GRAPH_MISSING_DATA_CONNECTED) {
-				$points = &$this->points[$index];
-				$missing_data_points = $this->getMissingData($points, $metric['options']['missingdatafunc']);
-
-				// Sort according new clock times (array keys).
-				$points += $missing_data_points;
-				ksort($points);
-
-				// Missing data function can change min value of Y axis.
-				if ($missing_data_points
-						&& $metric['options']['missingdatafunc'] == SVG_GRAPH_MISSING_DATA_TREAT_AS_ZERO) {
-					if ($this->min_value_left > 0 && $metric['options']['axisy'] == GRAPH_YAXIS_SIDE_LEFT) {
-						$this->min_value_left = 0;
-					}
-					elseif ($this->min_value_right > 0 && $metric['options']['axisy'] == GRAPH_YAXIS_SIDE_RIGHT) {
-						$this->min_value_right = 0;
-					}
-				}
-			}
-		}
-	}
-
-	/**
-	 * Calculate missing data for given set of $points according given $missingdatafunc.
-	 *
-	 * @param array $points           Array of metric points to modify, where key is metric timestamp.
-	 * @param int   $missingdatafunc  Type of function, allowed value:
-	 *                                SVG_GRAPH_MISSING_DATA_TREAT_AS_ZERO, SVG_GRAPH_MISSING_DATA_NONE,
-	 *                                SVG_GRAPH_MISSING_DATA_CONNECTED
-	 *
-	 * @return array  Array of calculated missing data points.
-	 */
-	protected function getMissingData(array $points = [], $missingdatafunc) {
-		// Get average distance between points to detect gaps of missing data.
-		$prev_clock = null;
-		$points_distance = [];
-		foreach ($points as $clock => $point) {
-			if ($prev_clock !== null) {
-				$points_distance[] = $clock - $prev_clock;
-			}
-			$prev_clock = $clock;
-		}
-
-		/**
-		 * $threshold          is a minimal period of time at what we assume that data point is missed;
-		 * $average_distance   is an average distance between existing data points;
-		 * $gap_interval       is a time distance between missing points used to fulfill gaps of missing data.
-		 *                     It's unique for each gap.
-		 */
-		$average_distance = $points_distance ? array_sum($points_distance) / count($points_distance) : 0;
-		$threshold = $points_distance ? $average_distance * 3 : 0;
-
-		// Add missing values.
-		$prev_clock = null;
-		$missing_points = [];
-		foreach ($points as $clock => $point) {
-			if ($prev_clock !== null && ($clock - $prev_clock) > $threshold) {
-				$gap_interval = floor(($clock - $prev_clock) / $threshold);
-
-				if ($missingdatafunc == SVG_GRAPH_MISSING_DATA_NONE) {
-					$missing_points[$prev_clock + $gap_interval] = null;
-				}
-				elseif ($missingdatafunc == SVG_GRAPH_MISSING_DATA_TREAT_AS_ZERO) {
-					$missing_points[$prev_clock + $gap_interval] = 0;
-					$missing_points[$clock - $gap_interval] = 0;
-				}
-			}
-
-			$prev_clock = $clock;
-		}
-
-		return $missing_points;
 	}
 
 	/**
