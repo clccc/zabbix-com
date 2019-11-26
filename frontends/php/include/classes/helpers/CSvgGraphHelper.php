@@ -62,7 +62,7 @@ class CSvgGraphHelper {
 		self::getMetricsData($metrics, $width);
 		// Load aggregated Data for each dataset.
 		self::getMetricsAggregatedData($metrics);
-		// Add missing data markers in respect to data frequency and missing data function.
+		// Add "missing data" markers in respect to "data frequency" and "missing data" function.
 		self::applyMissingData($metrics);
 
 		// Legend single line height is 18. Value should be synchronized with $svg-legend-line-height in 'screen.scss'.

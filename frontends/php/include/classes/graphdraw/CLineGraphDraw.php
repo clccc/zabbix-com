@@ -2146,7 +2146,7 @@ class CLineGraphDraw extends CGraphDraw {
 		$y1avg = $zero - ($avg_from - $oxy) / $unit2px;
 		$y2avg = $zero - ($avg_to - $oxy) / $unit2px;
 
-		// If between "from" and "to" there is missing data, we draw 1px for current line.
+		// If there was any missing data between "from" and "to", then draw 1px for current region.
 		if (array_key_exists($from, $data['missing_from'])) {
 			$x2 = $x1 + 1;
 			$y2min = $y1min + 1;
