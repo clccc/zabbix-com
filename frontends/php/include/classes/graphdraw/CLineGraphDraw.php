@@ -282,11 +282,15 @@ class CLineGraphDraw extends CGraphDraw {
 			$curr_data['max'] = null;
 			$curr_data['avg'] = null;
 			$curr_data['clock'] = null;
+			$curr_data['missing_from'] = null;
 
 			if (array_key_exists($item['itemid'], $results)) {
 				$result = $results[$item['itemid']];
+				$missing_data_interval = self::getDataFrequency($result['data'], $item) * 3;
+
 				$this->dataFrom = $result['source'];
 
+				$prev_clock = null;
 				foreach ($result['data'] as $row) {
 					$idx = $row['i'] - 1;
 					if ($idx < 0) {
@@ -308,6 +312,11 @@ class CLineGraphDraw extends CGraphDraw {
 					$curr_data['shift_min'][$idx] = 0;
 					$curr_data['shift_max'][$idx] = 0;
 					$curr_data['shift_avg'][$idx] = 0;
+
+					if ($prev_clock !== null && $row['clock'] - $missing_data_interval > $prev_clock) {
+						$curr_data['missing_from'][$idx] = true;
+					}
+					$prev_clock = $row['clock'];
 				}
 
 				unset($result);
@@ -2137,6 +2146,14 @@ class CLineGraphDraw extends CGraphDraw {
 		$y1avg = $zero - ($avg_from - $oxy) / $unit2px;
 		$y2avg = $zero - ($avg_to - $oxy) / $unit2px;
 
+		// If between "from" and "to" there is missing data, we draw 1px for current line.
+		if (array_key_exists($from, $data['missing_from'])) {
+			$x2 = $x1 + 1;
+			$y2min = $y1min + 1;
+			$y2max = $y1max + 1;
+			$y2avg = $y1avg + 1;
+		}
+
 		switch ($calc_fnc) {
 			case CALC_FNC_MAX:
 				$y1 = $y1max;
@@ -2309,6 +2326,45 @@ class CLineGraphDraw extends CGraphDraw {
 		}
 	}
 
+	/**
+	 * @param array $points
+	 * @param array $points[]['clock']
+	 * @param array $item
+	 * @param array $item['delay']
+	 * @param array $item['preprocessing']
+	 * @param array $item['preprocessing'][]['type']
+	 * @param array $item['preprocessing'][]['params']
+	 *
+	 * @return int
+	 */
+	protected static function getDataFrequency(array $points, array $item) {
+		$frequency = (int) timeUnitToSeconds($item['delay']);
+
+		foreach ($item['preprocessing'] as $preprocessing) {
+			if ($preprocessing['type'] == ZBX_PREPROC_THROTTLE_TIMED_VALUE) {
+				$throttle = (int) timeUnitToSeconds($preprocessing['params']);
+				if ($throttle > $frequency) {
+					$frequency = $throttle;
+				}
+
+				// Only one throttling step is allowed.
+				break;
+			}
+			else if ($preprocessing['type'] == ZBX_PREPROC_THROTTLE_VALUE) {
+				$frequency = null;
+
+				// Only one throttling step is allowed.
+				break;
+			}
+		}
+
+		if ($frequency == 0 && $frequency !== null) {
+			$frequency = self::getAverageDistance($points);
+		}
+
+		return $frequency;
+	}
+
 	private function calcSides() {
 		$sides = [];
 
@@ -2372,6 +2428,25 @@ class CLineGraphDraw extends CGraphDraw {
 				}
 			}
 		}
+	}
+
+	/**
+	 * @param array $points
+	 * @param array $points[]['clock']
+	 *
+	 * @return int
+	 */
+	protected static function getAverageDistance(array $points = []) {
+		$distances = [];
+		$prev_clock = null;
+		foreach ($points as $point) {
+			if ($prev_clock !== null) {
+				$distances[] = $point['clock'] - $prev_clock;
+			}
+			$prev_clock = $point['clock'];
+		}
+
+		return $distances ? array_sum($distances) / count($distances) : 0;
 	}
 
 	private function calcDimentions() {

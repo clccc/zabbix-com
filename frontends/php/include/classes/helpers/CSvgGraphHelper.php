@@ -650,7 +650,6 @@ class CSvgGraphHelper {
 
 	/**
 	 * @param array $points
-	 * @param array $points[]['value']
 	 * @param array $points[]['clock']
 	 *
 	 * @return int

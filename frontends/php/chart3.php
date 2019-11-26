@@ -108,6 +108,7 @@ elseif ($items = getRequest('items', [])) {
 			'value_type', 'key_'
 		],
 		'selectHosts' => ['hostid', 'name', 'host'],
+		'selectPreprocessing' => ['type', 'params'],
 		'filter' => [
 			'flags' => [ZBX_FLAG_DISCOVERY_NORMAL, ZBX_FLAG_DISCOVERY_PROTOTYPE, ZBX_FLAG_DISCOVERY_CREATED]
 		],
