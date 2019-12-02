@@ -282,7 +282,8 @@ class CLineGraphDraw extends CGraphDraw {
 			$curr_data['max'] = null;
 			$curr_data['avg'] = null;
 			$curr_data['clock'] = null;
-			$curr_data['missing_from'] = null;
+			$curr_data['missing_from'] = [];
+			$curr_data['missing_to'] = [];
 
 			if (array_key_exists($item['itemid'], $results)) {
 				$result = $results[$item['itemid']];
@@ -291,6 +292,7 @@ class CLineGraphDraw extends CGraphDraw {
 				$this->dataFrom = $result['source'];
 
 				$prev_clock = null;
+				$prev_row = null;
 				foreach ($result['data'] as $row) {
 					$idx = $row['i'] - 1;
 					if ($idx < 0) {
@@ -315,8 +317,12 @@ class CLineGraphDraw extends CGraphDraw {
 
 					if ($prev_clock !== null && $row['clock'] - $missing_data_interval > $prev_clock) {
 						$curr_data['missing_from'][$idx] = true;
+						if ($prev_row !== null &&  $row['clock'] + $missing_data_interval > $prev_row['clock']) {
+							$curr_data['missing_to'][$prev_row['i']] = true;
+						}
 					}
 					$prev_clock = $row['clock'];
+					$prev_row = $row;
 				}
 
 				unset($result);
@@ -2096,6 +2102,10 @@ class CLineGraphDraw extends CGraphDraw {
 			return;
 		}
 
+		if (array_key_exists($to, $data['missing_from']) && array_key_exists($from, $data['missing_to'])) {
+			$drawtype = GRAPH_ITEM_DRAWTYPE_BOLD_DOT;
+		}
+
 		$oxy = $this->oxy[$yaxisside];
 		$zero = $this->zero[$yaxisside];
 		$unit2px = $this->unit2px[$yaxisside];
@@ -2145,14 +2155,6 @@ class CLineGraphDraw extends CGraphDraw {
 
 		$y1avg = $zero - ($avg_from - $oxy) / $unit2px;
 		$y2avg = $zero - ($avg_to - $oxy) / $unit2px;
-
-		// If there was any missing data between "from" and "to", then draw 1px for current region.
-		if (array_key_exists($from, $data['missing_from'])) {
-			$x2 = $x1 + 1;
-			$y2min = $y1min + 1;
-			$y2max = $y1max + 1;
-			$y2avg = $y1avg + 1;
-		}
 
 		switch ($calc_fnc) {
 			case CALC_FNC_MAX:
@@ -2686,55 +2688,25 @@ class CLineGraphDraw extends CGraphDraw {
 			}
 
 			// for each X
-			$prevDraw = true;
-			for ($i = 1, $j = 0; $i < $maxX; $i++) { // new point
-				if ($data['count'][$i] == 0 && $i != ($maxX - 1)) {
+			for ($i = 0, $j = 0; $i < $maxX; $i++) {
+
+				if ($data['count'][$i] == 0 && $data['count'][$j] == 0) {
 					continue;
 				}
 
-				$delay = $this->items[$item]['delay'];
-
-				if ($this->items[$item]['type'] == ITEM_TYPE_TRAPPER
-						|| ($this->items[$item]['type'] == ITEM_TYPE_ZABBIX_ACTIVE
-							&& preg_match('/^(event)?log(rt)?\[/', $this->items[$item]['key_']))
-						|| ($this->items[$item]['has_scheduling_intervals'] && $delay == 0)) {
-					$draw = true;
-				}
-				else {
-					$diff = abs($data['clock'][$i] - $data['clock'][$j]);
-					$cell = ($this->to_time - $this->from_time) / $this->sizeX;
-
-					if ($cell > $delay) {
-						$draw = ($diff < (ZBX_GRAPH_MAX_SKIP_CELL * $cell));
-					}
-					else {
-						$draw = ($diff < (ZBX_GRAPH_MAX_SKIP_DELAY * $delay));
-					}
-				}
-
-				if (!$draw && !$prevDraw) {
-					$draw = true;
-					$valueDrawType = GRAPH_ITEM_DRAWTYPE_BOLD_DOT;
-				}
-				else {
-					$valueDrawType = $drawtype;
-					$prevDraw = $draw;
-				}
-
-				if ($draw) {
-					$this->drawElement(
-						$data,
-						$i,
-						$j,
-						$valueDrawType,
-						$max_color,
-						$avg_color,
-						$min_color,
-						$minmax_color,
-						$calc_fnc,
-						$this->items[$item]['yaxisside']
-					);
-				}
+				$has_data = !(array_key_exists($i, $data['missing_from']) && array_key_exists($j, $data['missing_to']));
+				$has_data && $this->drawElement(
+					$data,
+					$i,
+					$j,
+					$drawtype,
+					$max_color,
+					$avg_color,
+					$min_color,
+					$minmax_color,
+					$calc_fnc,
+					$this->items[$item]['yaxisside']
+				);
 
 				$j = $i;
 			}
