@@ -2329,15 +2329,18 @@ class CLineGraphDraw extends CGraphDraw {
 	}
 
 	/**
-	 * @param array $points
-	 * @param array $points[]['clock']
-	 * @param array $item
-	 * @param array $item['delay']
-	 * @param array $item['preprocessing']
-	 * @param array $item['preprocessing'][]['type']
-	 * @param array $item['preprocessing'][]['params']
+	 * Computes data frequency based on item configuration or data. Max value of delay or throttle is chosen, else
+	 * average distance is determined based on data, if there is not throttle preprocessing without heartbeat.
 	 *
-	 * @return int
+	 * @param array $points                             Data points that is collected by this item.
+	 * @param array $points[]['clock']                  Point timestamp.
+	 * @param array $item                               Item that collected points.
+	 * @param array $item['delay']                      Item delay.
+	 * @param array $item['preprocessing']              Item preprocessing.
+	 * @param array $item['preprocessing'][]['type']    Prerpocessing type. Ony throttle preprocessing looked at.
+	 * @param array $item['preprocessing'][]['params']  Preprocessing parameters.
+	 *
+	 * @return int|null  Determined frequency in seconds or null if cannot be determined.
 	 */
 	protected static function getDataFrequency(array $points, array $item) {
 		$frequency = (int) timeUnitToSeconds($item['delay']);
@@ -2433,8 +2436,10 @@ class CLineGraphDraw extends CGraphDraw {
 	}
 
 	/**
-	 * @param array $points
-	 * @param array $points[]['clock']
+	 * Computes the average interval between given points.
+	 *
+	 * @param array $points             Data set points.
+	 * @param array $points[]['clock']  Point timestamp.
 	 *
 	 * @return int
 	 */

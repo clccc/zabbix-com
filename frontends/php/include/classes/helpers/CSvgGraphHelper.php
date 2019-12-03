@@ -615,11 +615,14 @@ class CSvgGraphHelper {
 	}
 
 	/**
-	 * @param array $metrics
-	 * @param array $metrics['options']['frequency']
-	 * @param array $metrics['options']['missingdatafunc']
-	 * @param array $metrics['points'][]['value']
-	 * @param array $metrics['points'][]['clock']
+	 * Modifies each metric by first determining frequency if needed, then applying missing data markers to data set
+	 * according to missingdatafunc configuration.
+	 *
+	 * @param array $metrics                                List of data sets.
+	 * @param array $metrics['options']['frequency']        Interval at which each data should arrive in seconds.
+	 * @param array $metrics['options']['missingdatafunc']  Data set missing data setting.
+	 * @param array $metrics['points'][]['value']           Point value.
+	 * @param array $metrics['points'][]['clock']           Point timestamp.
 	 */
 	protected static function applyMissingData(array &$metrics = []) {
 		foreach ($metrics as &$metric) {
@@ -649,8 +652,10 @@ class CSvgGraphHelper {
 	}
 
 	/**
-	 * @param array $points
-	 * @param array $points[]['clock']
+	 * Computes the average interval between given points.
+	 *
+	 * @param array $points             Data set points.
+	 * @param array $points[]['clock']  Point timestamp.
 	 *
 	 * @return int
 	 */
@@ -668,11 +673,13 @@ class CSvgGraphHelper {
 	}
 
 	/**
-	 * @param array $points
-	 * @param array $points[]['value']
-	 * @param array $points[]['clock']
-	 * @param int   $frequency
-	 * @param int   $missingdatafunc
+	 * Based on expected data frequency. Produces a list of points that represent.
+	 *
+	 * @param array $points             Data set points.
+	 * @param array $points[]['value']  Point value.
+	 * @param array $points[]['clock']  Point timestamp.
+	 * @param int   $frequency          Interval or rate at which each data should arrive in seconds.
+	 * @param int   $missingdatafunc    Data set missing data setting, either to connect missing data or threat as zero.
 	 *
 	 * @return array
 	 */
