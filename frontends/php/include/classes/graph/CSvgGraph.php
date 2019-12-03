@@ -75,7 +75,8 @@ class CSvgGraph extends CSvg {
 	protected $points = [];
 
 	/**
-	 * Array of metric paths. Where key is metric index from $metrics array.
+	 * Array of metric paths. Where key is metric index from $metrics array, and value is either array of paths or
+	 * single path (in case of bar and points graphs).
 	 *
 	 * @var array
 	 */
@@ -805,10 +806,19 @@ class CSvgGraph extends CSvg {
 						$y = ($point > $max_value) ? max($y_min, $y) : min($y_max, $y);
 					}
 
-					$paths[$path_num][] = [$x, ceil($y), convert_units([
-						'value' => $point,
-						'units' => $metric['units']
-					])];
+					if ($metric['options']['type'] == SVG_GRAPH_TYPE_BAR
+							|| $metric['options']['type'] == SVG_GRAPH_TYPE_POINTS) {
+						$paths[] = [$x, ceil($y), convert_units([
+							'value' => $point,
+							'units' => $metric['units']
+						])];
+					}
+					else {
+						$paths[$path_num][] = [$x, ceil($y), convert_units([
+							'value' => $point,
+							'units' => $metric['units']
+						])];
+					}
 				}
 			}
 
@@ -853,7 +863,7 @@ class CSvgGraph extends CSvg {
 	protected function drawMetricsPoint() {
 		foreach ($this->metrics as $index => $metric) {
 			if ($metric['options']['type'] == SVG_GRAPH_TYPE_POINTS && array_key_exists($index, $this->paths)) {
-				$this->addItem(new CSvgGraphPoints(reset($this->paths[$index]), $metric));
+				$this->addItem(new CSvgGraphPoints($this->paths[$index], $metric));
 			}
 		}
 	}
@@ -878,7 +888,6 @@ class CSvgGraph extends CSvg {
 				$y_axis_side = $this->metrics[$index]['options']['axisy'];
 				$time_points = array_keys($this->points[$index]);
 				$last_point = 0;
-				$path = reset($path);
 
 				foreach ($path as $point_index => $point) {
 					$time_point = ($sec_per_px > $px_per_sec)
@@ -904,16 +913,16 @@ class CSvgGraph extends CSvg {
 				foreach ($paths as $path_index => $point_index) {
 					$group_x = $bar_groups_position[$y_axis][$time_point][$point_index];
 					if ($group_count > 1) {
-						$this->paths[$path_index][0][$point_index][0] = $group_x
+						$this->paths[$path_index][$point_index][0] = $group_x
 							// Calculate the leftmost X-coordinate including gap size.
 							- $group_width * .375
 							// Calculate the X-offset for the each bar in the group.
 							+ ceil($bar_width * ($group_index + .5));
 						$group_index++;
 					}
-					$this->paths[$path_index][0][$point_index][3] = max(1, $bar_width);
+					$this->paths[$path_index][$point_index][3] = max(1, $bar_width);
 					// X position for bars group.
-					$this->paths[$path_index][0][$point_index][4] = $group_x - $group_width * .375;
+					$this->paths[$path_index][$point_index][4] = $group_x - $group_width * .375;
 				}
 			}
 		}
@@ -925,7 +934,7 @@ class CSvgGraph extends CSvg {
 					: $this->left_y_zero;
 				$metric['options']['bar_width'] = $bar_min_width[$metric['options']['axisy']];
 
-				$this->addItem(new CSvgGraphBar(reset($this->paths[$index]), $metric));
+				$this->addItem(new CSvgGraphBar($this->paths[$index], $metric));
 			}
 		}
 	}
