@@ -282,17 +282,14 @@ class CLineGraphDraw extends CGraphDraw {
 			$curr_data['max'] = null;
 			$curr_data['avg'] = null;
 			$curr_data['clock'] = null;
-			$curr_data['missing_from'] = [];
-			$curr_data['missing_to'] = [];
+			$curr_data['missing_data_interval'] = null;
 
 			if (array_key_exists($item['itemid'], $results)) {
 				$result = $results[$item['itemid']];
-				$missing_data_interval = self::getDataFrequency($result['data'], $item) * 3;
+				$curr_data['missing_data_interval'] = self::getDataFrequency($result['data'], $item) * 3;
 
 				$this->dataFrom = $result['source'];
 
-				$prev_clock = null;
-				$prev_row = null;
 				foreach ($result['data'] as $row) {
 					$idx = $row['i'] - 1;
 					if ($idx < 0) {
@@ -314,15 +311,6 @@ class CLineGraphDraw extends CGraphDraw {
 					$curr_data['shift_min'][$idx] = 0;
 					$curr_data['shift_max'][$idx] = 0;
 					$curr_data['shift_avg'][$idx] = 0;
-
-					if ($prev_clock !== null && $row['clock'] - $missing_data_interval > $prev_clock) {
-						$curr_data['missing_from'][$idx] = true;
-						if ($prev_row !== null &&  $row['clock'] + $missing_data_interval > $prev_row['clock']) {
-							$curr_data['missing_to'][$prev_row['i']] = true;
-						}
-					}
-					$prev_clock = $row['clock'];
-					$prev_row = $row;
 				}
 
 				unset($result);
@@ -2102,10 +2090,6 @@ class CLineGraphDraw extends CGraphDraw {
 			return;
 		}
 
-		if (array_key_exists($to, $data['missing_from']) && array_key_exists($from, $data['missing_to'])) {
-			$drawtype = GRAPH_ITEM_DRAWTYPE_BOLD_DOT;
-		}
-
 		$oxy = $this->oxy[$yaxisside];
 		$zero = $this->zero[$yaxisside];
 		$unit2px = $this->unit2px[$yaxisside];
@@ -2673,6 +2657,11 @@ class CLineGraphDraw extends CGraphDraw {
 				continue;
 			}
 
+			/* if ($this->items[$item]['name'] !== 'calcx2') { */
+			if ($this->items[$item]['name'] !== 'calcx3') {
+				/* continue; */
+			}
+
 			if ($this->type == GRAPH_TYPE_STACKED) {
 				$drawtype = $this->items[$item]['drawtype'];
 				$max_color = $this->getColor('ValueMax', GRAPH_STACKED_ALFA);
@@ -2692,19 +2681,16 @@ class CLineGraphDraw extends CGraphDraw {
 				$calc_fnc = $this->items[$item]['calc_fnc'];
 			}
 
-			// for each X
-			for ($i = 0, $j = 0; $i < $maxX; $i++) {
+			foreach ($this->fmtLines($data, $maxX, $data['missing_data_interval']) as $line) {
 
-				if ($data['count'][$i] == 0 && $data['count'][$j] == 0) {
-					continue;
-				}
+				$i = $line[1];
+				$j = $line[0];
 
-				$has_data = !(array_key_exists($i, $data['missing_from']) && array_key_exists($j, $data['missing_to']));
-				$has_data && $this->drawElement(
+				$this->drawElement(
 					$data,
 					$i,
 					$j,
-					$drawtype,
+					(abs($j - $i) == 1) ? GRAPH_ITEM_DRAWTYPE_BOLD_DOT : $drawtype,
 					$max_color,
 					$avg_color,
 					$min_color,
@@ -2712,8 +2698,6 @@ class CLineGraphDraw extends CGraphDraw {
 					$calc_fnc,
 					$this->items[$item]['yaxisside']
 				);
-
-				$j = $i;
 			}
 		}
 
@@ -2735,5 +2719,82 @@ class CLineGraphDraw extends CGraphDraw {
 		unset($this->items, $this->data);
 
 		imageOut($this->im);
+	}
+
+	public function fmtLines(&$data, $max_x, $frequency) {
+		$lines = [];
+
+		$cursor = -1;
+		$lcursor = -1;
+		while (++ $cursor < $max_x) {
+			if (!$data['count'][$cursor]) {
+				continue;
+			}
+
+			$clock_x1 = $data['clock'][$cursor];
+			$value_x1 = $data['avg'][$cursor];
+			$cursor_x1 = $cursor;
+
+			// Found a point x1, now seek for x2.
+			while (++ $cursor < $max_x && $data['count'][$cursor]);
+
+			$clock_x2 = $data['clock'][$cursor];
+			$value_x2 = $data['avg'][$cursor];
+			$cursor_x2 = $cursor;
+
+			// A line x1, x2 is now formed, see if this line connects with previous line.
+			if (!array_key_exists($lcursor, $lines)) {
+				$lines[] = [$cursor_x1, $cursor_x2];
+				$lcursor ++;
+				continue;
+			}
+
+			$cursor_prev_x2 = $lines[$lcursor][1];
+
+
+			$time_diff = $clock_x2 - $data['clock'][$cursor_prev_x2];
+			$does_connect = ($time_diff <= $frequency);
+			$cell = ($this->to_time - $this->from_time) / $this->sizeX;
+
+			$prev_cursor_x2 = $lines[$lcursor][1];
+			if ($cursor - $prev_cursor_x2 < $cell) {
+				$does_connect = true;
+			}
+
+			if ($does_connect) {
+				if ($value_x1 != $data['avg'][ $lines[$lcursor][1] ]) {
+					$lines[++ $lcursor] = [$prev_cursor_x2, $cursor_x1];
+					$lines[++ $lcursor] = [$cursor_x1, $cursor_x2];
+				}
+				else {
+					$lines[$lcursor][1] = $cursor_x2 - 1;
+				}
+			}
+			else {
+				$lines[++ $lcursor] = [$cursor_x1, $cursor_x2];
+			}
+
+
+				/* if ($data['clock'] === null) { */
+				/* 	$diff = 0; */
+				/* } */
+				/* else { */
+				/* 	$diff = abs($data['clock'][$i] - $data['clock'][$j]); */
+				/* } */
+
+				/* t($cell); */
+
+				/* if ($cell > $delay) { */
+				/* 	$draw = ($diff < (ZBX_GRAPH_MAX_SKIP_CELL * $cell)); */
+				/* } */
+				/* else { */
+				/* 	$draw = ($diff < (ZBX_GRAPH_MAX_SKIP_DELAY * $delay)); */
+				/* } */
+
+		}
+
+		// todo connect to beginning where needed
+		// todo connect to end where needed
+		return $lines;
 	}
 }
