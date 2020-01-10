@@ -2657,11 +2657,6 @@ class CLineGraphDraw extends CGraphDraw {
 				continue;
 			}
 
-			/* if ($this->items[$item]['name'] !== 'calcx2') { */
-			if ($this->items[$item]['name'] !== 'calcx3') {
-				/* continue; */
-			}
-
 			if ($this->type == GRAPH_TYPE_STACKED) {
 				$drawtype = $this->items[$item]['drawtype'];
 				$max_color = $this->getColor('ValueMax', GRAPH_STACKED_ALFA);
@@ -2681,16 +2676,28 @@ class CLineGraphDraw extends CGraphDraw {
 				$calc_fnc = $this->items[$item]['calc_fnc'];
 			}
 
-			foreach ($this->fmtLines($data, $maxX, $data['missing_data_interval']) as $line) {
+			$elements = ($drawtype == GRAPH_ITEM_DRAWTYPE_DOT)
+				? $this->fmtPoints($data, $maxX)
+				: $this->fmtLines($data, $maxX, $data['missing_data_interval']);
 
-				$i = $line[1];
-				$j = $line[0];
+			foreach ($elements as $element) {
+				list($j, $i) = $element;
+
+				if ($drawtype == GRAPH_ITEM_DRAWTYPE_DOT) {
+					$metric_drawtype = GRAPH_ITEM_DRAWTYPE_DOT;
+				}
+				else if ($j == $i) {
+					$metric_drawtype = GRAPH_ITEM_DRAWTYPE_BOLD_DOT;
+				}
+				else {
+					$metric_drawtype = $drawtype;
+				}
 
 				$this->drawElement(
 					$data,
 					$i,
 					$j,
-					(abs($j - $i) == 1) ? GRAPH_ITEM_DRAWTYPE_BOLD_DOT : $drawtype,
+					$metric_drawtype,
 					$max_color,
 					$avg_color,
 					$min_color,
@@ -2721,80 +2728,86 @@ class CLineGraphDraw extends CGraphDraw {
 		imageOut($this->im);
 	}
 
+	public function fmtPoints(&$data, $max_x) {
+		$points = [];
+
+		$pt = -1;
+		$prev_pt = 0;
+		$point = -1;
+
+		while (++ $pt < $max_x) {
+			if (!$data['count'][$pt]) {
+				continue;
+			}
+
+			if ($prev_pt - $pt > ZBX_GRAPH_MAX_SKIP_CELL) {
+				// indicate clustered points as a bold point!?
+			}
+
+			$points[++ $point] = [$pt, $pt];
+			$prev_pt = $pt;
+		}
+
+		return $points;
+	}
+
 	public function fmtLines(&$data, $max_x, $frequency) {
 		$lines = [];
 
-		$cursor = -1;
-		$lcursor = -1;
-		while (++ $cursor < $max_x) {
-			if (!$data['count'][$cursor]) {
+		$pt = -1;
+		$prev_pt = 0;
+		$line = -1;
+
+		// Construct lines, of data points no less time apart in x axis as given in $frequency.
+		while (++ $pt < $max_x) {
+			if (!$data['count'][$pt]) {
 				continue;
 			}
 
-			$clock_x1 = $data['clock'][$cursor];
-			$value_x1 = $data['avg'][$cursor];
-			$cursor_x1 = $cursor;
-
-			// Found a point x1, now seek for x2.
-			while (++ $cursor < $max_x && $data['count'][$cursor]);
-
-			$clock_x2 = $data['clock'][$cursor];
-			$value_x2 = $data['avg'][$cursor];
-			$cursor_x2 = $cursor;
-
-			// A line x1, x2 is now formed, see if this line connects with previous line.
-			if (!array_key_exists($lcursor, $lines)) {
-				$lines[] = [$cursor_x1, $cursor_x2];
-				$lcursor ++;
-				continue;
+			if (!$lines) {
+				$lines[++ $line] = [$pt, $pt];
 			}
-
-			$cursor_prev_x2 = $lines[$lcursor][1];
-
-
-			$time_diff = $clock_x2 - $data['clock'][$cursor_prev_x2];
-			$does_connect = ($time_diff <= $frequency);
-			$cell = ($this->to_time - $this->from_time) / $this->sizeX;
-
-			$prev_cursor_x2 = $lines[$lcursor][1];
-			if ($cursor - $prev_cursor_x2 < $cell) {
-				$does_connect = true;
+			else if ($data['avg'][$pt] != $data['avg'][$prev_pt]) {
+				$lines[++ $line] = [$prev_pt, $pt];
+				$lines[++ $line] = [$pt, $pt];
 			}
-
-			if ($does_connect) {
-				if ($value_x1 != $data['avg'][ $lines[$lcursor][1] ]) {
-					$lines[++ $lcursor] = [$prev_cursor_x2, $cursor_x1];
-					$lines[++ $lcursor] = [$cursor_x1, $cursor_x2];
-				}
-				else {
-					$lines[$lcursor][1] = $cursor_x2 - 1;
-				}
+			else if ($pt - $prev_pt < ZBX_GRAPH_MAX_SKIP_CELL) {
+				$lines[$line][1] = $pt;
+			}
+			else if ($data['clock'][$pt] - $data['clock'][$prev_pt] > $frequency) {
+				$lines[++ $line] = [$pt, $pt];
 			}
 			else {
-				$lines[++ $lcursor] = [$cursor_x1, $cursor_x2];
+				$lines[$line][1] = $pt;
 			}
 
-
-				/* if ($data['clock'] === null) { */
-				/* 	$diff = 0; */
-				/* } */
-				/* else { */
-				/* 	$diff = abs($data['clock'][$i] - $data['clock'][$j]); */
-				/* } */
-
-				/* t($cell); */
-
-				/* if ($cell > $delay) { */
-				/* 	$draw = ($diff < (ZBX_GRAPH_MAX_SKIP_CELL * $cell)); */
-				/* } */
-				/* else { */
-				/* 	$draw = ($diff < (ZBX_GRAPH_MAX_SKIP_DELAY * $delay)); */
-				/* } */
-
+			$prev_pt = $pt;
 		}
 
-		// todo connect to beginning where needed
-		// todo connect to end where needed
+		// Metric lines are connected to image edges if it is not certain that this gap exists because of missing data.
+		if ($lines) {
+			$pt_first = $lines[0][0];
+			$pt_last = end($lines)[1];
+
+			$missing_data = ($data['clock'][$pt_first] - $data['clock'][0] > $frequency);
+			if ($pt_first < ZBX_GRAPH_MAX_SKIP_CELL) {
+				$missing_data = false;
+			}
+
+			if (!$missing_data && $pt_first != 0) {
+				array_unshift($lines, [0, $pt_first]);
+			}
+
+			$missing_data = ($data['clock'][$max_x - 1] - $data['clock'][$pt_last] > $frequency);
+			if ($max_x - 1 - $pt_last < ZBX_GRAPH_MAX_SKIP_CELL) {
+				$missing_data = false;
+			}
+
+			if (!$missing_data && $pt_last != $max_x - 1) {
+				$lines[] = [$pt_last, $max_x - 1];
+			}
+		}
+
 		return $lines;
 	}
 }
