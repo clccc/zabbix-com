@@ -282,7 +282,7 @@ class CLineGraphDraw extends CGraphDraw {
 			$curr_data['max'] = null;
 			$curr_data['avg'] = null;
 			$curr_data['clock'] = null;
-			$curr_data['missing_data_interval'] = null;
+			$curr_data['missing_data_interval'] = 0;
 
 			if (array_key_exists($item['itemid'], $results)) {
 				$result = $results[$item['itemid']];
@@ -2316,45 +2316,43 @@ class CLineGraphDraw extends CGraphDraw {
 	}
 
 	/**
-	 * Computes data frequency based on item configuration or data. Max value of delay or throttle is chosen, else
-	 * average distance is determined based on data, if there is not throttle preprocessing without heartbeat.
+	 * Computes data frequency based on item configuration or data. If there is throttle preprocessing without heartbeat
+	 * frequency is zero, else max value between "item delay" or "preprocessing heartbeat" is chosen. If item does not
+	 * have any throttling steps and it's delay is zero, then frequency is determined from data.
 	 *
 	 * @param array $points                             Data points that is collected by this item.
 	 * @param array $points[]['clock']                  Point timestamp.
 	 * @param array $item                               Item that collected points.
 	 * @param array $item['delay']                      Item delay.
 	 * @param array $item['preprocessing']              Item preprocessing.
-	 * @param array $item['preprocessing'][]['type']    Prerpocessing type. Ony throttle preprocessing looked at.
+	 * @param array $item['preprocessing'][]['type']    Preprocessing type. Only throttle preprocessing looked at.
 	 * @param array $item['preprocessing'][]['params']  Preprocessing parameters.
 	 *
-	 * @return int|null  Determined frequency in seconds or null if cannot be determined.
+	 * @return int                                      Determined frequency in seconds or 0 if cannot be determined.
 	 */
 	protected static function getDataFrequency(array $points, array $item) {
 		$frequency = (int) timeUnitToSeconds($item['delay']);
 
 		foreach ($item['preprocessing'] as $preprocessing) {
+			// Only one of throttling steps is allowed.
 			if ($preprocessing['type'] == ZBX_PREPROC_THROTTLE_TIMED_VALUE) {
 				$throttle = (int) timeUnitToSeconds($preprocessing['params']);
 				if ($throttle > $frequency) {
-					$frequency = $throttle;
+					return (int) $throttle;
 				}
 
-				// Only one throttling step is allowed.
 				break;
 			}
 			else if ($preprocessing['type'] == ZBX_PREPROC_THROTTLE_VALUE) {
-				$frequency = null;
-
-				// Only one throttling step is allowed.
-				break;
+				return 0;
 			}
 		}
 
-		if ($frequency == 0 && $frequency !== null) {
-			$frequency = self::getAverageDistance($points);
+		if ($frequency == 0) {
+			return self::getAverageDistance($points);
 		}
 
-		return $frequency;
+		return (int) $frequency;
 	}
 
 	private function calcSides() {
@@ -2731,11 +2729,18 @@ class CLineGraphDraw extends CGraphDraw {
 		imageOut($this->im);
 	}
 
+	/**
+	 * Produces points, or zero length lines, from data set.
+	 *
+	 * @param array $data   Data set.
+	 * @param int   $max_x  Number of pixels in graph.
+	 *
+	 * @return array
+	 */
 	public function fmtPoints(&$data, $max_x) {
 		$points = [];
 
 		$pt = -1;
-		$prev_pt = 0;
 		$point = -1;
 
 		while (++ $pt < $max_x) {
@@ -2744,12 +2749,21 @@ class CLineGraphDraw extends CGraphDraw {
 			}
 
 			$points[++ $point] = [$pt, $pt];
-			$prev_pt = $pt;
 		}
 
 		return $points;
 	}
 
+	/**
+	 * Produces lines according with expected data frequency. Points are connected only when they are no further apart
+	 * as given frequency.
+	 *
+	 * @param array $data       Data set.
+	 * @param int   $max_x      Number of pixels in graph.
+	 * @param int   $frequency  Expected metric frequency in seconds. If frequency is zero, lines are always connected.
+	 *
+	 * @return array
+	 */
 	public function fmtLines(&$data, $max_x, $frequency) {
 		$lines = [];
 
