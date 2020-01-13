@@ -2784,7 +2784,7 @@ class CLineGraphDraw extends CGraphDraw {
 				$lines[++ $line] = [$prev_pt, $pt];
 				$lines[++ $line] = [$pt, $pt];
 			}
-			else if ($pt - $prev_pt < ZBX_GRAPH_MAX_SKIP_CELL) {
+			else if (!$frequency || $pt - $prev_pt < ZBX_GRAPH_MAX_SKIP_CELL) {
 				$lines[$line][1] = $pt;
 			}
 			else if ($data['clock'][$pt] - $data['clock'][$prev_pt] > $frequency) {
@@ -2797,27 +2797,33 @@ class CLineGraphDraw extends CGraphDraw {
 			$prev_pt = $pt;
 		}
 
-		// Metric lines are connected to image edges if it is not certain that this gap exists because of missing data.
+		/*
+		 * Metric lines are connected to image edges when it is not certain that this gap exists because of missing data
+		 * or when first point is closer to image edge than max allowed graph cell. When frequency is zero, will always
+		 * connect lines to graph edges, or up till current time for the right graph edge.
+		 */
 		if ($lines) {
 			$pt_first = $lines[0][0];
+			if ($pt_first != 0) {
+				if ($pt_first < ZBX_GRAPH_MAX_SKIP_CELL
+						|| (!$frequency || $data['clock'][$pt_first] - $data['clock'][0] < $frequency)) {
+					array_unshift($lines, [0, $pt_first]);
+				}
+			}
+
 			$pt_last = end($lines)[1];
+			$px_last = $max_x - 1;
+			if ($pt_last != $px_last) {
+				// If graph image contains a region in "future", extending happens up till "now" instead of image edge.
+				$now = time();
+				if ($data['clock'][$px_last] > $now) {
+					while ($data['clock'][-- $px_last] > $now);
+				}
 
-			$missing_data = ($data['clock'][$pt_first] - $data['clock'][0] > $frequency);
-			if ($pt_first < ZBX_GRAPH_MAX_SKIP_CELL) {
-				$missing_data = false;
-			}
-
-			if (!$missing_data && $pt_first != 0) {
-				array_unshift($lines, [0, $pt_first]);
-			}
-
-			$missing_data = ($data['clock'][$max_x - 1] - $data['clock'][$pt_last] > $frequency);
-			if ($max_x - 1 - $pt_last < ZBX_GRAPH_MAX_SKIP_CELL) {
-				$missing_data = false;
-			}
-
-			if (!$missing_data && $pt_last != $max_x - 1) {
-				$lines[] = [$pt_last, $max_x - 1];
+				if ($px_last - $pt_last < ZBX_GRAPH_MAX_SKIP_CELL
+						|| (!$frequency || $data['clock'][$px_last] - $data['clock'][$pt_last] < $frequency)) {
+					$lines[] = [$pt_last, $px_last];
+				}
 			}
 		}
 
