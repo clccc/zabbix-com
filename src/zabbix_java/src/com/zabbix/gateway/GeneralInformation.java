@@ -22,9 +22,9 @@ package com.zabbix.gateway;
 class GeneralInformation
 {
 	static final String APPLICATION_NAME = "Zabbix Java Gateway";
-	static final String REVISION_DATE = "20 November 2019";
+	static final String REVISION_DATE = "19 December 2019";
 	static final String REVISION = "{ZABBIX_REVISION}";
-	static final String VERSION = "4.4.2rc2";
+	static final String VERSION = "4.4.5rc1";
 
 	static void printVersion()
 	{

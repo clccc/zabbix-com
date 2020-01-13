@@ -630,7 +630,7 @@ ZABBIX.apps.map = (function($) {
 					event.preventDefault();
 					event.stopPropagation();
 
-					// Recreate menu everytime due copy/paste function availability changes.
+					// Recreate menu every time due copy/paste function availability changes.
 					if (item_data.popupid) {
 						$('#' + item_data.popupid).filter('.menu-popup').remove();
 					}
@@ -2524,7 +2524,7 @@ ZABBIX.apps.map = (function($) {
 			getDimensions: Shape.prototype.getDimensions,
 
 			/**
-			 * Updates element icon and height/witdh in case element is area type.
+			 * Updates element icon and height/width in case element is area type.
 			 */
 			updateIcon: function() {
 				var oldIconClass = this.domNode.get(0).className.match(/sysmap_iconid_\d+/);

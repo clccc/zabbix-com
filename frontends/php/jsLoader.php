@@ -91,8 +91,9 @@ $availableJScripts = [
 	'class.csvggraph.js' => '',
 	'class.ctree.js' => '',
 	'class.curl.js' => '',
+	'class.overlaycollection.js' => '',
 	'class.cverticalaccordion.js' => '',
-	'class.mapWidget.js' => '',
+	'class.mapwidget.js' => '',
 	'class.svg.canvas.js' => 'vector/',
 	'class.svg.map.js' => 'vector/',
 	'class.cviewswitcher.js' => '',
@@ -211,6 +212,7 @@ $tranStrings = [
 		'S_PROBLEM_ON' => _('Problem on'),
 		'S_RESOLVED' => _('Resolved'),
 		'S_MUTE' => _('Mute'),
+		'S_CANNOT_SUPPORT_NOTIFICATION_AUDIO' => _('Cannot support notification audio for this device.'),
 		'S_UNMUTE' => _('Unmute'),
 		'S_CLEAR' => _('Clear'),
 		'S_SNOOZE' => _('Snooze')
@@ -321,7 +323,7 @@ $tranStrings = [
 	],
 	'common.js' => [
 		'Cancel' => _('Cancel')
-	],
+	]
 ];
 
 $js = '';
@@ -333,6 +335,7 @@ if (empty($_GET['files'])) {
 		'jquery-ui.js',
 		'common.js',
 		'class.cdebug.js',
+		'class.overlaycollection.js',
 		'class.cdate.js',
 		'class.cookie.js',
 		'class.curl.js',

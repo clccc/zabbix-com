@@ -72,7 +72,7 @@ class testPageAdministrationMediaTypes extends CWebTest {
 					'filter' => [
 						'Status' => 'Enabled'
 					],
-					'result' => ['Email', 'SMS']
+					'result' => ['Email', 'Mattermost', 'Opsgenie', 'Pushover', 'SMS']
 				]
 			],
 			[

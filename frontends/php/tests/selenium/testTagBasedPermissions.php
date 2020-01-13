@@ -55,7 +55,8 @@ class testTagBasedPermissions extends CLegacyWebTest {
 						$values = [''];
 					}
 
-					foreach ($values as $value) {
+					foreach ($values as $i => $value) {
+						$i += 1;
 						$this->zbxTestClickButtonMultiselect('tag_filter_groupids_');
 						$this->zbxTestLaunchOverlayDialog('Host groups');
 						$this->zbxTestClickLinkTextWait($hostgroup);
@@ -68,7 +69,8 @@ class testTagBasedPermissions extends CLegacyWebTest {
 						}
 
 						$this->zbxTestClickXpath("//ul[@id='tagFilterFormList']//button[text()='Add']");
-						$this->zbxTestWaitUntilElementVisible(WebDriverBy::xpath('//table[@id="tag-filter-table"]//td[text()="'.$hostgroup.'"]'));
+						$xpath = '//table[@id="tag_filter_table"]//tbody//tr['.$i.']//td/button[text()="Remove"]';
+						$this->zbxTestWaitUntilElementVisible(WebDriverBy::xpath($xpath)	);
 					}
 				}
 			}
@@ -294,6 +296,7 @@ class testTagBasedPermissions extends CLegacyWebTest {
 		foreach ($data['trigger_names'] as $name) {
 			// Select trigger
 			$this->zbxTestClickButtonMultiselect('filter_triggerids_');
+			COverlayDialogElement::find()->one()->waitUntilReady();
 			$this->zbxTestLaunchOverlayDialog('Triggers');
 			$this->zbxTestClickXpathWait("//div[@class='overlay-dialogue-body']//a[text()='$name']");
 			// Apply filter

@@ -415,10 +415,14 @@ static zbx_hash_t	lld_item_application_hash_func(const void *data)
 	const zbx_lld_item_application_t	*item_application = (zbx_lld_item_application_t *)data;
 	zbx_hash_t				hash;
 
-	hash = ZBX_DEFAULT_HASH_ALGO(&item_application->item_ref, sizeof(item_application->item_ref),
-			ZBX_DEFAULT_HASH_SEED);
-	return ZBX_DEFAULT_HASH_ALGO(&item_application->application_ref, sizeof(item_application->application_ref),
-			hash);
+	hash = ZBX_DEFAULT_HASH_ALGO(&item_application->item_ref.itemid, sizeof(item_application->item_ref.itemid),
+				ZBX_DEFAULT_HASH_SEED);
+	hash = ZBX_DEFAULT_HASH_ALGO(&item_application->item_ref.item, sizeof(item_application->item_ref.item), hash);
+
+	hash = ZBX_DEFAULT_HASH_ALGO(&item_application->application_ref.applicationid,
+			sizeof(item_application->application_ref.applicationid), hash);
+	return ZBX_DEFAULT_HASH_ALGO(&item_application->application_ref.application,
+			sizeof(item_application->application_ref.application), hash);
 }
 
 static int	lld_item_application_compare_func(const void *d1, const void *d2)
@@ -2538,6 +2542,10 @@ static void	substitute_lld_macros_in_preproc_params(int type, const zbx_lld_row_
 			flags1 = ZBX_MACRO_ANY | ZBX_TOKEN_PROMETHEUS;
 			params_num = 1;
 			break;
+		case ZBX_PREPROC_JSONPATH:
+			flags1 = ZBX_MACRO_ANY | ZBX_TOKEN_JSONPATH;
+			params_num = 1;
+			break;
 		default:
 			flags1 = ZBX_MACRO_ANY;
 			params_num = 1;
@@ -3196,18 +3204,20 @@ static void lld_item_discovery_prepare_update(const zbx_lld_item_prototype_t *it
 static int	lld_items_save(zbx_uint64_t hostid, const zbx_vector_ptr_t *item_prototypes, zbx_vector_ptr_t *items,
 		zbx_hashset_t *items_index, int *host_locked)
 {
-	int			ret = SUCCEED, i, new_items = 0, upd_items = 0;
-	zbx_lld_item_t		*item;
-	zbx_uint64_t		itemid, itemdiscoveryid;
-	zbx_db_insert_t		db_insert_items, db_insert_idiscovery, db_insert_irtdata;
-	zbx_lld_item_index_t	item_index_local;
-	zbx_vector_uint64_t	upd_keys;
-	char			*sql = NULL;
-	size_t			sql_alloc = 8 * ZBX_KIBIBYTE, sql_offset = 0;
+	int				ret = SUCCEED, i, new_items = 0, upd_items = 0;
+	zbx_lld_item_t			*item;
+	zbx_uint64_t			itemid, itemdiscoveryid;
+	zbx_db_insert_t			db_insert_items, db_insert_idiscovery, db_insert_irtdata;
+	zbx_lld_item_index_t		item_index_local;
+	zbx_vector_uint64_t		upd_keys, item_protoids;
+	char				*sql = NULL;
+	size_t				sql_alloc = 8 * ZBX_KIBIBYTE, sql_offset = 0;
+	zbx_lld_item_prototype_t	*item_prototype;
 
 	zabbix_log(LOG_LEVEL_DEBUG, "In %s()", __func__);
 
 	zbx_vector_uint64_create(&upd_keys);
+	zbx_vector_uint64_create(&item_protoids);
 
 	if (0 == items->values_num)
 		goto out;
@@ -3244,6 +3254,19 @@ static int	lld_items_save(zbx_uint64_t hostid, const zbx_vector_ptr_t *item_prot
 		}
 
 		*host_locked = 1;
+	}
+
+	for (i = 0; i < item_prototypes->values_num; i++)
+	{
+		item_prototype = (zbx_lld_item_prototype_t *)item_prototypes->values[i];
+		zbx_vector_uint64_append(&item_protoids, item_prototype->itemid);
+	}
+
+	if (SUCCEED != DBlock_itemids(&item_protoids))
+	{
+		/* the item prototype was removed while processing lld rule */
+		ret = FAIL;
+		goto out;
 	}
 
 	if (0 != upd_items)
@@ -3336,8 +3359,7 @@ static int	lld_items_save(zbx_uint64_t hostid, const zbx_vector_ptr_t *item_prot
 
 	if (0 != upd_items)
 	{
-		zbx_lld_item_prototype_t	*item_prototype;
-		int				index;
+		int	index;
 
 		sql_offset = 0;
 
@@ -3372,6 +3394,7 @@ static int	lld_items_save(zbx_uint64_t hostid, const zbx_vector_ptr_t *item_prot
 	}
 out:
 	zbx_free(sql);
+	zbx_vector_uint64_destroy(&item_protoids);
 	zbx_vector_uint64_destroy(&upd_keys);
 	zabbix_log(LOG_LEVEL_DEBUG, "End of %s()", __func__);
 
@@ -3580,7 +3603,7 @@ static int	lld_applications_save(zbx_uint64_t hostid, zbx_vector_ptr_t *applicat
 	int					ret = SUCCEED, i, new_applications = 0, new_discoveries = 0, index;
 	zbx_lld_application_t			*application;
 	const zbx_lld_application_prototype_t	*application_prototype;
-	zbx_uint64_t				applicationid = 0, application_discoveryid = 0;
+	zbx_uint64_t				applicationid, application_discoveryid;
 	zbx_db_insert_t				db_insert, db_insert_discovery;
 	zbx_vector_uint64_t			del_applicationids, del_discoveryids;
 	char					*sql_a = NULL, *sql_ad = NULL, *name;

@@ -27,7 +27,7 @@ window.ZABBIX = Object.create({
 	 * @param {string} path  Dot separated path. Each segment is used as object key.
 	 * @param {mixed} value  Optional value to be written into path only if path held undefined before.
 	 *
-	 * @return {mixed}  Value underlaying the path is returned.
+	 * @return {mixed}  Value underlying the path is returned.
 	 */
 	namespace: function(path, value) {
 		return path.split('.').reduce(function(obj, pt, idx, src) {
@@ -200,7 +200,7 @@ jQuery(function($) {
 	 * Event handler for the preloader elements destroy.
 	 */
 	function menuPopupPreloaderCloseHandler(event) {
-		overlayPreloaderDestroy(event.data.id, event.data.xhr);
+		overlayPreloaderDestroy(event.data.id);
 	}
 
 	/**
@@ -262,7 +262,7 @@ jQuery(function($) {
 
 		$(document)
 			.off('click', menuPopupPreloaderCloseHandler)
-			.on('click', {id: $preloader.prop('id'), xhr: xhr}, menuPopupPreloaderCloseHandler);
+			.on('click', {id: $preloader.prop('id')}, menuPopupPreloaderCloseHandler);
 
 		return false;
 	});

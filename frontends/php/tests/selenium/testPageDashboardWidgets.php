@@ -41,7 +41,6 @@ class testPageDashboardWidgets extends CWebTest {
 		$form = $dashboard->getWidget('System information')->edit();
 		$this->assertEquals('System information', $form->getField('Type')->getValue());
 		$form->submit();
-		$form->parents('xpath://div[contains(@class, "overlay-dialogue")]')->one()->waitUntilNotVisible();
 		// Check that widget type isn't changed in frontend and in DB.
 		$this->checkLastSelectedWidgetType();
 
@@ -56,7 +55,6 @@ class testPageDashboardWidgets extends CWebTest {
 		];
 		$form->fill($data);
 		$form->submit();
-		$form->parents('xpath://div[contains(@class, "overlay-dialogue")]')->one()->waitUntilNotVisible();
 		$this->checkLastSelectedWidgetType();
 
 		// Add widget with current default type "Action log".
@@ -78,6 +76,7 @@ class testPageDashboardWidgets extends CWebTest {
 	 */
 	private function checkLastSelectedWidgetType($type = 'Action log', $db_type = null) {
 		$dashboard = CDashboardElement::find()->one();
+		$this->query('id:overlay_bg')->waitUntilNotVisible();
 		$overlay = $dashboard->addWidget();
 		$form = $overlay->asForm();
 		$this->assertEquals($type, $form->getField('Type')->getValue());
@@ -150,7 +149,7 @@ class testPageDashboardWidgets extends CWebTest {
 		// Expected table values.
 		$expected = [
 			'Host group for tag permissions'	=> 1,
-			'Zabbix servers'					=> 17,
+			'Zabbix servers'					=> 18,
 			'ZBX6648 All Triggers'				=> 1,
 			'ZBX6648 Disabled Triggers'			=> 1,
 			'ZBX6648 Enabled Triggers'			=> 1

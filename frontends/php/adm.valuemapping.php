@@ -133,7 +133,7 @@ if (hasRequest('form')) {
 	}
 	else {
 		$data['name'] = getRequest('name', '');
-		$data['mappings'] = getRequest('mappings', []);
+		$data['mappings'] = array_values(getRequest('mappings', []));
 	}
 
 	if ($data['valuemapid'] != 0) {

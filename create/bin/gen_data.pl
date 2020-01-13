@@ -26,7 +26,7 @@ my %ibm_db2 = (
 	"database"	=>	"ibm_db2",
 	"before"	=>	"",
 	"after"		=>	"",
-	"exec_cmd"	=>	";\n"
+	"exec_cmd"	=>	";;\n"
 );
 
 my %mysql = (

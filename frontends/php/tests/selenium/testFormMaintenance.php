@@ -71,7 +71,7 @@ class testFormMaintenance extends CLegacyWebTest {
 		$this->assertRegexp('/Monday/', $text);
 		$this->assertRegexp('/Sunday/', $text);
 
-		// Add "Monthly" maintenace period with "January" and "November".
+		// Add "Monthly" maintenance period with "January" and "November".
 		$this->zbxTestClickButtonText('New');
 		$this->zbxTestDropdownSelectWait('new_timeperiod_timeperiod_type', 'Monthly');
 		$this->zbxTestCheckboxSelect('new_timeperiod_month_jan');
