@@ -2740,10 +2740,6 @@ class CLineGraphDraw extends CGraphDraw {
 				continue;
 			}
 
-			if ($prev_pt - $pt > ZBX_GRAPH_MAX_SKIP_CELL) {
-				// indicate clustered points as a bold point!?
-			}
-
 			$points[++ $point] = [$pt, $pt];
 			$prev_pt = $pt;
 		}
