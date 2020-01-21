@@ -238,7 +238,7 @@ class CSvgGraph extends CSvg {
 
 				foreach ($metric['points'] as $point) {
 
-					// Point with value of null is used as a maker in denoting missing point and should not affect axis.
+					// Point with value of null is used as marker in denoting missing point. It should not affect axis.
 					if ($point['value'] !== null) {
 						if ($min_value === null || $min_value > $point['value']) {
 							$min_value = $point['value'];
