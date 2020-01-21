@@ -2343,7 +2343,7 @@ class CLineGraphDraw extends CGraphDraw {
 
 				break;
 			}
-			else if ($preprocessing['type'] == ZBX_PREPROC_THROTTLE_VALUE) {
+			elseif ($preprocessing['type'] == ZBX_PREPROC_THROTTLE_VALUE) {
 				return 0;
 			}
 		}
@@ -2687,7 +2687,7 @@ class CLineGraphDraw extends CGraphDraw {
 				if ($drawtype == GRAPH_ITEM_DRAWTYPE_DOT) {
 					$metric_drawtype = GRAPH_ITEM_DRAWTYPE_DOT;
 				}
-				else if ($j == $i) {
+				elseif ($j == $i) {
 					$metric_drawtype = GRAPH_ITEM_DRAWTYPE_BOLD_DOT;
 				}
 				else {
@@ -2730,7 +2730,7 @@ class CLineGraphDraw extends CGraphDraw {
 	}
 
 	/**
-	 * Produces points, or zero length lines, from data set.
+	 * Produces points or zero length lines from data set.
 	 *
 	 * @param array $data   Data set.
 	 * @param int   $max_x  Number of pixels in graph.
@@ -2780,14 +2780,14 @@ class CLineGraphDraw extends CGraphDraw {
 			if (!$lines) {
 				$lines[++ $line] = [$pt, $pt];
 			}
-			else if ($data['avg'][$pt] != $data['avg'][$prev_pt]) {
+			elseif ($data['avg'][$pt] != $data['avg'][$prev_pt]) {
 				$lines[++ $line] = [$prev_pt, $pt];
 				$lines[++ $line] = [$pt, $pt];
 			}
-			else if (!$frequency || $pt - $prev_pt < ZBX_GRAPH_MAX_SKIP_CELL) {
+			elseif (!$frequency || $pt - $prev_pt < ZBX_GRAPH_MAX_SKIP_CELL) {
 				$lines[$line][1] = $pt;
 			}
-			else if ($data['clock'][$pt] - $data['clock'][$prev_pt] > $frequency) {
+			elseif ($data['clock'][$pt] - $data['clock'][$prev_pt] > $frequency) {
 				$lines[++ $line] = [$pt, $pt];
 			}
 			else {

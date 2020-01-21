@@ -126,6 +126,7 @@ elseif ($items = getRequest('items', [])) {
 			'hostname' => $host['name']
 		];
 	}
+	unset($dbItems);
 
 	foreach ($graph_items as &$graph_item) {
 		unset($graph_item['hosts']);

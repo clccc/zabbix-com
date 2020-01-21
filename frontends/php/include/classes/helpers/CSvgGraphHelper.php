@@ -595,7 +595,7 @@ class CSvgGraphHelper {
 							// Only one throttling step is allowed.
 							break;
 						}
-						else if ($preprocessing['type'] == ZBX_PREPROC_THROTTLE_VALUE) {
+						elseif ($preprocessing['type'] == ZBX_PREPROC_THROTTLE_VALUE) {
 							$metric_frequecy = [-1];
 
 							// Only one throttling step is allowed.
@@ -713,7 +713,7 @@ class CSvgGraphHelper {
 	}
 
 	/**
-	 * Apply overrides for each pattern matchig metric.
+	 * Apply overrides for each pattern matching metric.
 	 */
 	protected static function applyOverrides(array &$metrics = [], array $overrides = []) {
 		foreach ($overrides as $override) {

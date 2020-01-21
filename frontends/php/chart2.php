@@ -81,7 +81,7 @@ $db_items = API::Item()->get([
 foreach ($items as &$item) {
 	$item['preprocessing'] = $db_items[$item['itemid']]['preprocessing'];
 }
-unset($item);
+unset($item, $db_items);
 
 /*
  * Display
