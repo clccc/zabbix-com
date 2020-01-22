@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Zabbix 4.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-12 01:48+0200\n"
+"POT-Creation-Date: 2020-01-19 01:48+0200\n"
 "PO-Revision-Date: 2019-12-09 09:47+0300\n"
 "Last-Translator: Anonymous Pootle User\n"
 "Language-Team: Zabbix <info@zabbix.com>\n"
@@ -35,10 +35,10 @@ msgstr ""
 
 #: include/classes/api/services/CMaintenance.php:351
 #: include/classes/api/services/CMaintenance.php:356
-#: include/classes/api/services/CMaintenance.php:389
-#: include/classes/api/services/CMaintenance.php:578
-#: include/classes/api/services/CMaintenance.php:594
-#: include/classes/api/services/CMaintenance.php:657 maintenance.php:139
+#: include/classes/api/services/CMaintenance.php:396
+#: include/classes/api/services/CMaintenance.php:585
+#: include/classes/api/services/CMaintenance.php:601
+#: include/classes/api/services/CMaintenance.php:671 maintenance.php:139
 #: maintenance.php:145 services.php:182 services.php:191
 #, c-format
 msgid "\"%s\" must be between 1970.01.01 and 2038.01.18."
@@ -530,7 +530,7 @@ msgid "Active"
 msgstr "Kích hoạt"
 
 #: include/classes/api/services/CMaintenance.php:351
-#: include/classes/api/services/CMaintenance.php:578
+#: include/classes/api/services/CMaintenance.php:585
 #: include/views/configuration.maintenance.edit.php:54
 #: include/views/configuration.maintenance.list.php:72 maintenance.php:45
 #: maintenance.php:139
@@ -538,7 +538,7 @@ msgid "Active since"
 msgstr "Kích hoạt từ"
 
 #: include/classes/api/services/CMaintenance.php:356
-#: include/classes/api/services/CMaintenance.php:594
+#: include/classes/api/services/CMaintenance.php:601
 #: include/views/configuration.maintenance.edit.php:60
 #: include/views/configuration.maintenance.list.php:73 maintenance.php:48
 #: maintenance.php:145
@@ -794,7 +794,7 @@ msgid "Agent"
 msgstr "Agent"
 
 #: include/classes/items/CHelpItems.php:69
-#: include/classes/items/CHelpItems.php:363
+#: include/classes/items/CHelpItems.php:367
 msgid "Agent availability check. Returns nothing - unavailable; 1 - available"
 msgstr "Kiểm tra tính sẵn sàng của agent. Trả về 0 - không sẵn sàng; 1 - sẵn sàng"
 
@@ -803,7 +803,7 @@ msgid "Agent encryption"
 msgstr "Mã hóa agent"
 
 #: include/classes/items/CHelpItems.php:65
-#: include/classes/items/CHelpItems.php:359
+#: include/classes/items/CHelpItems.php:363
 msgid "Agent host name. Returns string"
 msgstr "Tên máy chủ agent. Trả về kiểu string"
 
@@ -822,7 +822,7 @@ msgstr "Agent hoặc SNMP hoặc JMX hoặc IPMI interface"
 msgid "Aggregate"
 msgstr ""
 
-#: include/classes/items/CHelpItems.php:669
+#: include/classes/items/CHelpItems.php:677
 msgid "Aggregate checks do not require any agent running on a host being monitored. Zabbix server collects aggregate information by doing direct database queries. See Zabbix Manual."
 msgstr "Tập hợp các kiểm tra yêu cầu không được bất kỳ agent nào đang chạy trên host thì được theo dõi. Zabbix server thu thập các tập hợp thông tin bằng cách trực tiếp. Xem hướng dẫn Zabbix."
 
@@ -1157,7 +1157,7 @@ msgid "At (hour:minute)"
 msgstr ""
 
 #: include/classes/api/services/CMaintenance.php:279
-#: include/classes/api/services/CMaintenance.php:686
+#: include/classes/api/services/CMaintenance.php:700
 #: include/views/configuration.maintenance.edit.php:233
 msgid "At least one host group or host must be selected."
 msgstr "Ít nhất một nhóm máy chủ hoặc máy chủ phải đượ chọn."
@@ -1168,8 +1168,8 @@ msgstr "Ít nhất 1 interface phải tồn tại."
 
 #: include/classes/api/services/CMaintenance.php:367
 #: include/classes/api/services/CMaintenance.php:375
-#: include/classes/api/services/CMaintenance.php:614
-#: include/classes/api/services/CMaintenance.php:622
+#: include/classes/api/services/CMaintenance.php:621
+#: include/classes/api/services/CMaintenance.php:629
 msgid "At least one maintenance period must be created."
 msgstr "Ít nhất một chu kỳ bảo trì phải được thiết lập."
 
@@ -1528,17 +1528,17 @@ msgid "CLOSING"
 msgstr "ĐÓNG"
 
 #: include/classes/items/CHelpItems.php:205
-#: include/classes/items/CHelpItems.php:519
+#: include/classes/items/CHelpItems.php:523
 msgid "CPU information. Returns string or integer"
 msgstr "Thông tin SPU. Trả về kiểu string hoặc integer"
 
 #: include/classes/items/CHelpItems.php:181
-#: include/classes/items/CHelpItems.php:495
+#: include/classes/items/CHelpItems.php:499
 msgid "CPU load. Returns float"
 msgstr "CPU load. Trả về kiều float"
 
 #: include/classes/items/CHelpItems.php:193
-#: include/classes/items/CHelpItems.php:507
+#: include/classes/items/CHelpItems.php:511
 msgid "CPU utilisation percentage. Returns float"
 msgstr "Tỉ lệ sử dụng CPU. Trả về kiểu float"
 
@@ -2954,11 +2954,11 @@ msgstr "Đăng nhập phân biệt chữ hoa/thường"
 msgid "Catalan (ca_ES)"
 msgstr "Catalan (ca_ES)"
 
-#: include/classes/items/CHelpItems.php:933
+#: include/classes/items/CHelpItems.php:941
 msgid "Catches all SNMP traps that match regex. If regexp is unspecified, catches any trap."
 msgstr "Chọn tất cả các trap SNMP phù hợp với regex. Nếu regrexp không được chỉ định, chọn bất kỳ trap nào."
 
-#: include/classes/items/CHelpItems.php:929
+#: include/classes/items/CHelpItems.php:937
 msgid "Catches all SNMP traps that were not caught by any of snmptrap[] items."
 msgstr "Chọn tất cả các trap SNMP không bị chọn bởi bất kỳ item snmptrap [] nào."
 
@@ -3033,7 +3033,7 @@ msgid "Chassis"
 msgstr "Chassis"
 
 #: include/classes/items/CHelpItems.php:201
-#: include/classes/items/CHelpItems.php:515
+#: include/classes/items/CHelpItems.php:519
 msgid "Chassis information. Returns string"
 msgstr "Thông tin Chassis. Trả về kiểu string"
 
@@ -3086,55 +3086,55 @@ msgid "Checks"
 msgstr "Kiểm tra"
 
 #: include/classes/items/CHelpItems.php:85
-#: include/classes/items/CHelpItems.php:399
+#: include/classes/items/CHelpItems.php:403
 msgid "Checks if DNS service is up. Returns 0 - DNS is down (server did not respond or DNS resolution failed); 1 - DNS is up"
 msgstr "Kiểm tra nếu máy chủ DNS bật. Trả về 0 - DNS tắt (Máy chủ không trả lời hoặc độ phân giải DNS lỗi);"
 
 #: include/classes/items/CHelpItems.php:289
-#: include/classes/items/CHelpItems.php:603
+#: include/classes/items/CHelpItems.php:607
 msgid "Checks if file exists. Returns 0 - not found; 1 - regular file or a link (symbolic or hard) to regular file exists"
 msgstr "Kiểm tra nếu trường tồn tại. Trả về 0 - Không tìm thấy; 1 - tập tin chính thức hoặc một liên kết (symbolic or hard) đến tập tin chính quy đã tồn tại"
 
 #: include/classes/items/CHelpItems.php:117
-#: include/classes/items/CHelpItems.php:431
+#: include/classes/items/CHelpItems.php:435
 msgid "Checks if it is possible to make TCP connection to specified port. Returns 0 - cannot connect; 1 - can connect"
 msgstr "Kiểm tra nếu có thể thực hiện kết nối TCP đến cổng được chỉ định. Trả về 0 - không thể kết nối; 1 - có thể kết nối"
 
-#: include/classes/items/CHelpItems.php:675
+#: include/classes/items/CHelpItems.php:683
 msgid "Checks if server is accessible by ICMP ping. 0 - ICMP ping fails. 1 - ICMP ping successful."
 msgstr "Kiểm tra nếu máy chủ có thể truy cập bởi ICMP ping. 0 - ICMP ping thất bại. 1 - ICMP ping thành công."
 
 #: include/classes/items/CHelpItems.php:121
-#: include/classes/items/CHelpItems.php:435
-#: include/classes/items/CHelpItems.php:687
+#: include/classes/items/CHelpItems.php:439
+#: include/classes/items/CHelpItems.php:695
 msgid "Checks if service is running and accepting TCP connections. Returns 0 - service is down; 1 - service is running"
 msgstr "Kiểm tra nếu dịch vụ đang chạy và chấp nhận kết nối TCP. Trả về 0 - dịch vụ không chạy; 1 - dịch vụ đang chạy"
 
 #: include/classes/items/CHelpItems.php:133
-#: include/classes/items/CHelpItems.php:447
-#: include/classes/items/CHelpItems.php:695
+#: include/classes/items/CHelpItems.php:451
+#: include/classes/items/CHelpItems.php:703
 msgid "Checks if service is running and responding to UDP requests. Returns 0 - service is down; 1 - service is running"
 msgstr "Kiểm tra nếu dịch vụ đang chạy và đáp ứng yêu cầu đến UDP. Trả về 0 - dịch vụ không chạy; 1 - dịch vụ đang chạy"
 
 #: include/classes/items/CHelpItems.php:113
-#: include/classes/items/CHelpItems.php:427
+#: include/classes/items/CHelpItems.php:431
 msgid "Checks if this TCP port is in LISTEN state. Returns 0 - it is not in LISTEN state; 1 - it is in LISTEN state"
 msgstr "Kiểm tra nếu cổng TCP này là trong trạng thái LISTEN. Trả về 0 - nó không ở trạng thái LISTEN; 1 - nó không ở trạng thái LISTEN"
 
 #: include/classes/items/CHelpItems.php:129
-#: include/classes/items/CHelpItems.php:443
+#: include/classes/items/CHelpItems.php:447
 msgid "Checks if this UDP port is in LISTEN state. Returns 0 - it is not in LISTEN state; 1 - it is in LISTEN state"
 msgstr "Kiểm tra nếu cổng UDP này là trong trạng thái LISTEN. Trả về 0 - nó không ở trạng thái LISTEN; 1 - nó ở trạng thái LISTEN"
 
 #: include/classes/items/CHelpItems.php:125
-#: include/classes/items/CHelpItems.php:439
-#: include/classes/items/CHelpItems.php:691
+#: include/classes/items/CHelpItems.php:443
+#: include/classes/items/CHelpItems.php:699
 msgid "Checks performance of TCP service. Returns 0 - service is down; seconds - the number of seconds spent while connecting to the service"
 msgstr "Kiểm tra performance của dịch vụ TCP. Trả về 0 - dịch vụ không chạy; giây - số giây đã sử dụng trong khi kết nối với dịch vụ"
 
 #: include/classes/items/CHelpItems.php:137
-#: include/classes/items/CHelpItems.php:451
-#: include/classes/items/CHelpItems.php:699
+#: include/classes/items/CHelpItems.php:455
+#: include/classes/items/CHelpItems.php:707
 msgid "Checks performance of UDP service. Returns 0 - service is down; seconds - the number of seconds spent waiting for response from the service"
 msgstr "Kiểm tra performance của dịch vụ UDP. Trả về 0 - Dịch vụ không chạy; giây - số giây dành để chờ phản hồi từ dịch vụ"
 
@@ -3377,7 +3377,7 @@ msgstr "Điều kiện trùng lặp cho tương quan \"%1$s\"."
 msgid "Configuration"
 msgstr "Cấu hình"
 
-#: include/classes/items/CHelpItems.php:1015
+#: include/classes/items/CHelpItems.php:1023
 msgid "Configuration cache statistics. Cache - buffer (modes: pfree, total, used, free)."
 msgstr "Cấu hình thống kê cache. Cache - buffer (chế độ:  pfree, total, used, free)."
 
@@ -3817,20 +3817,20 @@ msgid "Count"
 msgstr "Đếm"
 
 #: include/classes/items/CHelpItems.php:189
-#: include/classes/items/CHelpItems.php:503
+#: include/classes/items/CHelpItems.php:507
 msgid "Count of context switches. Returns integer"
 msgstr "Đếm bởi chuyển ngữ cảnh. Trả về kiểu integer"
 
 #: include/classes/items/CHelpItems.php:273
-#: include/classes/items/CHelpItems.php:587
+#: include/classes/items/CHelpItems.php:591
 msgid "Count of directory entries, recursively. Returns integer"
 msgstr "Đếm các mục trong thư mục, đệ quy. Trả về kiểu integer"
 
-#: include/classes/items/CHelpItems.php:395
+#: include/classes/items/CHelpItems.php:399
 msgid "Count of matched lines in log file monitoring with log rotation support. Returns integer"
 msgstr "Đếm các dòng khớp nhau trong giám sát tệp nhật ký với hỗ trợ xoay vòng nhật ký. Trả về kiểu integer"
 
-#: include/classes/items/CHelpItems.php:387
+#: include/classes/items/CHelpItems.php:391
 msgid "Count of matched lines in log file monitoring. Returns integer"
 msgstr "Đếm các dòng khớp nhau trong giám sát tệp nhật ký. Trả về kiểu integer"
 
@@ -4213,7 +4213,7 @@ msgstr "Dashed line"
 msgid "Data"
 msgstr "Dữ liệu"
 
-#: include/classes/items/CHelpItems.php:1059
+#: include/classes/items/CHelpItems.php:1067
 msgid "Data cache statistics. Cache - one of values (modes: all, float, uint, str, log, text), history (modes: pfree, total, used, free), trend (modes: pfree, total, used, free), text (modes: pfree, total, used, free)."
 msgstr "Thống kê dữ liệu bộ nhớ cache. Cache - một trong các giá trị (các chế độ: all, float, uint, str, log, text), lịch sử (Các chế độ: pfree, total, used, free), xu hướng (Các chế độ: pfree, total, used, free), văn bản (Các chế độ: pfree, total, used, free)."
 
@@ -4286,8 +4286,8 @@ msgstr "Kiểu cơ sở dữ liệu"
 msgid "Database user"
 msgstr "Người dùng cơ sở dữ liệu"
 
-#: include/classes/api/services/CMaintenance.php:390
-#: include/classes/api/services/CMaintenance.php:657
+#: include/classes/api/services/CMaintenance.php:397
+#: include/classes/api/services/CMaintenance.php:671
 #: include/forms.inc.php:2210 include/forms.inc.php:2295 maintenance.php:50
 msgid "Date"
 msgstr "Ngày"
@@ -4850,7 +4850,7 @@ msgid "Device"
 msgstr "Thiết bị"
 
 #: include/classes/items/CHelpItems.php:177
-#: include/classes/items/CHelpItems.php:491
+#: include/classes/items/CHelpItems.php:495
 msgid "Device interrupts. Returns integer"
 msgstr "Thiết bị ngắt. Trả về kiểu integer"
 
@@ -4863,7 +4863,7 @@ msgid "Dimension (cols x rows)"
 msgstr "Kích thước (cột x hàng)"
 
 #: include/classes/items/CHelpItems.php:277
-#: include/classes/items/CHelpItems.php:591
+#: include/classes/items/CHelpItems.php:595
 msgid "Directory size (in bytes). Returns integer"
 msgstr "Kích thước thư mục (byte). Trả về integer"
 
@@ -5137,17 +5137,17 @@ msgid "Discovery status"
 msgstr "Trạng thái phát hiện"
 
 #: include/classes/items/CHelpItems.php:265
-#: include/classes/items/CHelpItems.php:579
+#: include/classes/items/CHelpItems.php:583
 msgid "Disk read statistics. Returns integer with type in sectors, operations, bytes; float with type in sps, ops, bps"
 msgstr "Đĩa đọc số liệu thống kê. Trả về kiểu integer với kiểu trong  mảng, thao tác, bytes; float với kiểu sps, ops, bps"
 
 #: include/classes/items/CHelpItems.php:317
-#: include/classes/items/CHelpItems.php:631
+#: include/classes/items/CHelpItems.php:639
 msgid "Disk space in bytes or in percentage from total. Returns integer for bytes; float for percentage"
 msgstr "Dung lượng đĩa tính theo byte hoặc theo tỉ lệ phần trăm trên tổng số. Trả về kiểu integer hoặc byte; float cho tỉ lệ phần trăm"
 
 #: include/classes/items/CHelpItems.php:269
-#: include/classes/items/CHelpItems.php:583
+#: include/classes/items/CHelpItems.php:587
 msgid "Disk write statistics. Returns integer with type in sectors, operations, bytes; float with type in sps, ops, bps"
 msgstr "Thống kê đĩa ghi. Trả về kiểu integer với loại trong các ngành, hoạt động, byte; float với loại trong sps, ops, bps"
 
@@ -5545,7 +5545,7 @@ msgstr ""
 #: include/classes/api/services/CHost.php:1264
 #: include/classes/api/services/CHostPrototype.php:888
 #: include/classes/api/services/CImage.php:451
-#: include/classes/api/services/CMaintenance.php:521
+#: include/classes/api/services/CMaintenance.php:528
 #: include/classes/api/services/CMap.php:555
 #: include/classes/api/services/CMap.php:581
 #: include/classes/api/services/CMap.php:1022
@@ -5839,7 +5839,7 @@ msgstr "Tạo ra sự kiện"
 msgid "Event list [previous 20]"
 msgstr "Danh sách sự kiện [20 trở lại]"
 
-#: include/classes/items/CHelpItems.php:371
+#: include/classes/items/CHelpItems.php:375
 msgid "Event log monitoring. Returns log"
 msgstr "Theo dõi log sự kiện. Trả về log"
 
@@ -5892,12 +5892,12 @@ msgstr "Thực hiện"
 msgid "Execute SQL error [%1$s] in [%2$s]."
 msgstr "Thực hiện lỗi SQL [%1$s] trong [%2$s]."
 
-#: include/classes/items/CHelpItems.php:345
+#: include/classes/items/CHelpItems.php:349
 msgid "Execute WMI query and return the JSON document with all selected objects"
 msgstr ""
 
-#: include/classes/items/CHelpItems.php:341
-#: include/classes/items/CHelpItems.php:655
+#: include/classes/items/CHelpItems.php:345
+#: include/classes/items/CHelpItems.php:663
 msgid "Execute WMI query and return the first selected object. Returns integer, float, string or text (depending on the request)"
 msgstr "Thực hiện truy vấn WMI và trả về đối tượng được trả về đầu tiên. Trả về kiểu integer, float, string hoặc text (tùy theo yêu cầu)"
 
@@ -6170,7 +6170,7 @@ msgid "Field \"host\" is mandatory."
 msgstr "Trường \"máy chủ\" là bắt buộc."
 
 #: include/classes/items/CHelpItems.php:281
-#: include/classes/items/CHelpItems.php:595
+#: include/classes/items/CHelpItems.php:599
 msgid "File checksum, calculated by the UNIX cksum algorithm. Returns integer"
 msgstr "Tổng kiểm tra tệp, được tính toán bằng thuật toán cksum UNIX. Trả về kiểu integer"
 
@@ -6189,12 +6189,17 @@ msgid "File provided to a view does not exist. Tried to find \"%s\"."
 msgstr "Tập tin đã cung cấp cho một cái nhìn không tồn tại. Thử tìm \"%s\"."
 
 #: include/classes/items/CHelpItems.php:305
-#: include/classes/items/CHelpItems.php:619
+#: include/classes/items/CHelpItems.php:623
 msgid "File size (in bytes). Returns integer"
 msgstr "Kích cỡ tệp tin (byte). Trả về kiểu integer"
 
+#: include/classes/items/CHelpItems.php:321
+#: include/classes/items/CHelpItems.php:635
+msgid "File systems and their spaces in bytes and percentage from total. Returns JSON"
+msgstr ""
+
 #: include/classes/items/CHelpItems.php:309
-#: include/classes/items/CHelpItems.php:623
+#: include/classes/items/CHelpItems.php:627
 msgid "File time information. Returns integer (Unix timestamp)"
 msgstr "Thông tin thời gian tập tin. Trả về kiểu integer (dấu thời gian Unix)"
 
@@ -6256,17 +6261,17 @@ msgid "Filters"
 msgstr "Bộ lọc"
 
 #: include/classes/items/CHelpItems.php:301
-#: include/classes/items/CHelpItems.php:615
+#: include/classes/items/CHelpItems.php:619
 msgid "Find string in a file. Returns 0 - match not found; 1 - found"
 msgstr "Tìm chuỗi trong một tệp tin. Trả về 0 - không tìm thấy; 1 - tìm thấy"
 
 #: include/classes/items/CHelpItems.php:297
-#: include/classes/items/CHelpItems.php:611
+#: include/classes/items/CHelpItems.php:615
 msgid "Find string in a file. Returns the line containing the matched string, or as specified by the optional output parameter"
 msgstr "Tìm chuỗi trong một tập tin. Trả về dòng chứa chuỗi khớp hoặc theo chỉ định của tham số đầu ra tùy chọn"
 
-#: include/classes/items/CHelpItems.php:337
-#: include/classes/items/CHelpItems.php:651
+#: include/classes/items/CHelpItems.php:341
+#: include/classes/items/CHelpItems.php:659
 msgid "Find string on a web page. Returns the matched string, or as specified by the optional output parameter"
 msgstr "Tìm chuỗi trên một trang web. Trả về chuỗi khớp hoặc theo chỉ định của tham số đầu ra tùy chọn"
 
@@ -6436,8 +6441,8 @@ msgstr "Georgian (ka_GE)"
 msgid "German (de_DE)"
 msgstr "German (de_DE)"
 
-#: include/classes/items/CHelpItems.php:329
-#: include/classes/items/CHelpItems.php:643
+#: include/classes/items/CHelpItems.php:333
+#: include/classes/items/CHelpItems.php:651
 msgid "Get content of web page. Returns web page source as text"
 msgstr "Nội dung của trang web. Trả về nguồn trang web dưới dạng văn bản"
 
@@ -6857,7 +6862,7 @@ msgid "Hardware (Full details)"
 msgstr "Phần cứng (đầy đủ các chi tiết)"
 
 #: include/classes/items/CHelpItems.php:161
-#: include/classes/items/CHelpItems.php:475
+#: include/classes/items/CHelpItems.php:479
 msgid "Hardware sensor reading. Returns float"
 msgstr "Đọc cảm biến phần cứng. Trả về kiểu float"
 
@@ -7560,7 +7565,7 @@ msgid "Icons"
 msgstr "Các biểu tượng"
 
 #: include/classes/items/CHelpItems.php:253
-#: include/classes/items/CHelpItems.php:567
+#: include/classes/items/CHelpItems.php:571
 msgid "Identification of the system. Returns string"
 msgstr "Nhận dạng hệ thống. Trả về kiểu string"
 
@@ -7743,7 +7748,7 @@ msgid "Include subgroups"
 msgstr "Bao gồm các nhóm nhỏ"
 
 #: include/classes/items/CHelpItems.php:97
-#: include/classes/items/CHelpItems.php:411
+#: include/classes/items/CHelpItems.php:415
 msgid "Incoming traffic statistics on network interface. Returns integer"
 msgstr "Thống kê lưu lượng truy cập đến interface mạng. Trả về kiểu trigger"
 
@@ -8346,7 +8351,7 @@ msgid "Incorrect parameters for condition."
 msgstr "Các tham số cho điều kiện không chính xác."
 
 #: include/classes/api/services/CMaintenance.php:325
-#: include/classes/api/services/CMaintenance.php:531
+#: include/classes/api/services/CMaintenance.php:538
 msgid "Incorrect parameters for maintenance."
 msgstr "Các tham số cho bảo trì không chính xác."
 
@@ -8577,6 +8582,8 @@ msgstr "Giá trị \"%1$s\" không chính xác đối với trường floa
 msgid "Incorrect value \"%1$s\" for int field \"%2$s\"."
 msgstr "Giá trị \"%1$s\" không chính xác đối với trường int \"%2$s\"."
 
+#: include/classes/api/services/CMaintenance.php:387
+#: include/classes/api/services/CMaintenance.php:654
 #: include/classes/db/DB.php:367
 #, c-format
 msgid "Incorrect value \"%1$s\" for unsigned int field \"%2$s\"."
@@ -8737,8 +8744,8 @@ msgstr "Giá trị không chính xác cho trường \"%1$s\"."
 #: include/classes/api/services/CItem.php:834
 #: include/classes/api/services/CItemPrototype.php:958
 #: include/classes/api/services/CItemPrototype.php:966
-#: include/classes/api/services/CMaintenance.php:481
-#: include/classes/api/services/CMaintenance.php:697
+#: include/classes/api/services/CMaintenance.php:488
+#: include/classes/api/services/CMaintenance.php:711
 #: include/classes/api/services/CMapElement.php:85
 #: include/classes/api/services/CMapElement.php:106
 #: include/classes/api/services/CMapElement.php:125
@@ -8869,7 +8876,7 @@ msgid "Information"
 msgstr "Thông tin"
 
 #: include/classes/items/CHelpItems.php:165
-#: include/classes/items/CHelpItems.php:479
+#: include/classes/items/CHelpItems.php:483
 msgid "Information about a service. Returns integer with param as state, startup; string - with param as displayname, path, user; text - with param as description; Specifically for state: 0 - running, 1 - paused, 2 - start pending, 3 - pause pending, 4 - continue pending, 5 - stop pending, 6 - stopped, 7 - unknown, 255 - no such service; Specifically for startup: 0 - automatic, 1 - automatic delayed, 2 - manual, 3 - disabled, 4 - unknown"
 msgstr "Thông tin về một dịch vụ. Trả về số nguyên với tham số là trạng thái, khởi động; string - với tham số là tên hiển thị, đường dẫn, người dùng; text - với tham số như mô tả; Cụ thể cho trạng thái: 0 - đang chạy, 1 - tạm dừng, 2 - bắt đầu chờ xử lý, 3 - tạm dừng chờ xử lý, 4 - tiếp tục chờ xử lý, 5 - dừng chờ xử lý, 6 - dừng, 7 - không xác định, 255 - không có dịch vụ; Cụ thể khởi động: 0 - tự động, 1 - tự động bị trì hoãn, 2 - thủ công, 3 - bị vô hiệu hóa, 4 - không xác định"
 
@@ -10127,22 +10134,22 @@ msgid "List of user shares"
 msgstr "Danh sách chia sẻ người dùng"
 
 #: include/classes/items/CHelpItems.php:213
-#: include/classes/items/CHelpItems.php:527
+#: include/classes/items/CHelpItems.php:531
 msgid "Listing of MAC addresses. Returns string"
 msgstr "Danh sách địa chỉ MAC. Trả về kiểu string"
 
 #: include/classes/items/CHelpItems.php:209
-#: include/classes/items/CHelpItems.php:523
+#: include/classes/items/CHelpItems.php:527
 msgid "Listing of PCI or USB devices. Returns text"
 msgstr "Danh sách các thiết bị PCI hoặc USB. Trả về kiểu text"
 
 #: include/classes/items/CHelpItems.php:237
-#: include/classes/items/CHelpItems.php:551
+#: include/classes/items/CHelpItems.php:555
 msgid "Listing of installed packages. Returns text"
 msgstr "Danh sách các gói được cài đặt. Trả về kiểu text"
 
 #: include/classes/items/CHelpItems.php:169
-#: include/classes/items/CHelpItems.php:483
+#: include/classes/items/CHelpItems.php:487
 msgid "Listing of services. Returns 0 - if empty; text - list of services separated by a newline"
 msgstr "Danh sách dịch vụ. Trả về không - nếu trống; text - danh sách các dịch vụ được phân tách bởi một dòng mới"
 
@@ -10150,8 +10157,8 @@ msgstr "Danh sách dịch vụ. Trả về không - nếu trống; text - danh s
 msgid "Lithuanian (lt_LT)"
 msgstr "Lithuanian (lt_LT)"
 
-#: include/classes/items/CHelpItems.php:333
-#: include/classes/items/CHelpItems.php:647
+#: include/classes/items/CHelpItems.php:337
+#: include/classes/items/CHelpItems.php:655
 msgid "Loading time of full web page (in seconds). Returns float"
 msgstr "Thời gian tải của trang web đầy đủ (tính bằng giây). Trả về kiểu float"
 
@@ -10187,11 +10194,11 @@ msgstr "Vị trí kinh độ"
 msgid "Log"
 msgstr "Log"
 
-#: include/classes/items/CHelpItems.php:391
+#: include/classes/items/CHelpItems.php:395
 msgid "Log file monitoring with log rotation support. Returns log"
 msgstr "Giám sát tệp tin log với hỗ trợ quay vòng log. Trả về log"
 
-#: include/classes/items/CHelpItems.php:383
+#: include/classes/items/CHelpItems.php:387
 msgid "Log file monitoring. Returns log"
 msgstr "Giám sát tệp tin log. Trả về kiểu log"
 
@@ -10273,7 +10280,7 @@ msgid "MD5"
 msgstr "MD5"
 
 #: include/classes/items/CHelpItems.php:293
-#: include/classes/items/CHelpItems.php:607
+#: include/classes/items/CHelpItems.php:611
 msgid "MD5 checksum of file. Returns character string (MD5 hash of the file)"
 msgstr "Tổng kiểm tra MD5 của tập tin. Trả về chuỗi ký tự (MD5 của tệp)"
 
@@ -10351,14 +10358,14 @@ msgstr "Bảo trì"
 
 #: include/classes/api/services/CMaintenance.php:331
 #: include/classes/api/services/CMaintenance.php:345
-#: include/classes/api/services/CMaintenance.php:565
-#: include/classes/api/services/CMaintenance.php:715
+#: include/classes/api/services/CMaintenance.php:572
+#: include/classes/api/services/CMaintenance.php:729
 #, c-format
 msgid "Maintenance \"%1$s\" already exists."
 msgstr "Bảo trì \"%1$s\" đã tồn tại."
 
 #: include/classes/api/services/CMaintenance.php:361
-#: include/classes/api/services/CMaintenance.php:607
+#: include/classes/api/services/CMaintenance.php:614
 msgid "Maintenance \"Active since\" value cannot be bigger than \"Active till\"."
 msgstr "Giá trị bảo trì \"Active since\" không thể được lớn hơn so với \"Active till\"."
 
@@ -10599,12 +10606,12 @@ msgid "Max count of elements to show inside table cell \"%1$s\"."
 msgstr "Đếm tối đã các phần tử hiển thị bên trong ô của bảng \"%1$s\"."
 
 #: include/classes/items/CHelpItems.php:77
-#: include/classes/items/CHelpItems.php:375
+#: include/classes/items/CHelpItems.php:379
 msgid "Maximum number of opened files supported by OS. Returns integer"
 msgstr "Số lượng tệp mở tối đa được hỗ trợ bởi HĐH. Trả về kiểu integer"
 
 #: include/classes/items/CHelpItems.php:81
-#: include/classes/items/CHelpItems.php:379
+#: include/classes/items/CHelpItems.php:383
 msgid "Maximum number of processes supported by OS. Returns integer"
 msgstr "Số lượng tiến trình tối thiểu được hỗ trợ bởi HĐH. Trả về kiểu integer"
 
@@ -10714,13 +10721,13 @@ msgstr "Thành viên"
 msgid "Memory limit: %1$s"
 msgstr "Giới hạn bộ nhớ: %1$s"
 
-#: include/classes/items/CHelpItems.php:321
-#: include/classes/items/CHelpItems.php:635
+#: include/classes/items/CHelpItems.php:325
+#: include/classes/items/CHelpItems.php:643
 msgid "Memory size in bytes or in percentage from total. Returns integer for bytes; float for percentage"
 msgstr "Kích thước bộ nhớ theo byte hoặc theo tỷ lệ phần trăm từ tổng số. Trả về kiểu integer cho byte; kiểu float tỷ lệ phần trăm"
 
 #: include/classes/items/CHelpItems.php:149
-#: include/classes/items/CHelpItems.php:463
+#: include/classes/items/CHelpItems.php:467
 msgid "Memory used by process in bytes. Returns integer"
 msgstr "Bộ nhớ đã sử dụng bởi tiến trình theo byte. Trả về kiểu integer"
 
@@ -11144,7 +11151,7 @@ msgid "Network discovery event and alert data storage period \"%1$s\"."
 msgstr "Sự kiện khám phá mạng và chu kỳ cảnh báo lưu trữ dữ liệu \"%1$s\"."
 
 #: include/classes/items/CHelpItems.php:101
-#: include/classes/items/CHelpItems.php:415
+#: include/classes/items/CHelpItems.php:419
 msgid "Network interface list (includes interface type, status, IPv4 address, description). Returns text"
 msgstr "Danh sách interface (bao gồm loại interface, trạng thái, địa chỉ IPv4, mô tả). Trả về kiểu text"
 
@@ -11693,10 +11700,10 @@ msgstr "Không có quyền truy cập hệ thống."
 #: include/classes/api/services/CMaintenance.php:263
 #: include/classes/api/services/CMaintenance.php:292
 #: include/classes/api/services/CMaintenance.php:305
-#: include/classes/api/services/CMaintenance.php:554
-#: include/classes/api/services/CMaintenance.php:636
-#: include/classes/api/services/CMaintenance.php:732
-#: include/classes/api/services/CMaintenance.php:750
+#: include/classes/api/services/CMaintenance.php:561
+#: include/classes/api/services/CMaintenance.php:643
+#: include/classes/api/services/CMaintenance.php:746
+#: include/classes/api/services/CMaintenance.php:764
 #: include/classes/api/services/CMapElement.php:190
 #: include/classes/api/services/CMapElement.php:321
 #: include/classes/api/services/CMap.php:567
@@ -11950,11 +11957,11 @@ msgid "November"
 msgstr "Tháng 11"
 
 #: include/classes/items/CHelpItems.php:185
-#: include/classes/items/CHelpItems.php:499
+#: include/classes/items/CHelpItems.php:503
 msgid "Number of CPUs. Returns integer"
 msgstr "Số lượng CPU. Trả về kiểu integer"
 
-#: include/classes/items/CHelpItems.php:963
+#: include/classes/items/CHelpItems.php:971
 msgid "Number of enabled items on the host."
 msgstr "Số lượng item kích hoạt trên máy chủ."
 
@@ -11966,30 +11973,30 @@ msgstr "Số lượng máy chủ (Kích hoạt/vô hiệu hóa/mẫu)"
 msgid "Number of items (enabled/disabled/not supported)"
 msgstr "Số lượng item (Kích hoạt/vô hiệu hóa/không hỗ trợ)"
 
-#: include/classes/items/CHelpItems.php:987
+#: include/classes/items/CHelpItems.php:995
 msgid "Number of items in Zabbix database."
 msgstr "Số lượng item trong cơ sở dữ liệu Zabbix."
 
-#: include/classes/items/CHelpItems.php:1007
+#: include/classes/items/CHelpItems.php:1015
 msgid "Number of items in proxy history that are not yet sent to the server"
 msgstr "Số lượng itrm trong lịch sử proxy mà chưa được gửi đến máy chủ"
 
-#: include/classes/items/CHelpItems.php:1011
+#: include/classes/items/CHelpItems.php:1019
 msgid "Number of items in the queue which are delayed by from to to seconds, inclusive."
 msgstr "Số lượng item trong hàng đợi mà đang bị trễ từ giây thứ, bao gồm."
 
-#: include/classes/items/CHelpItems.php:353
-#: include/classes/items/CHelpItems.php:663
-#: include/classes/items/CHelpItems.php:1027
+#: include/classes/items/CHelpItems.php:357
+#: include/classes/items/CHelpItems.php:671
+#: include/classes/items/CHelpItems.php:1035
 msgid "Number of items in the queue which are delayed in Zabbix server or proxy by \"from\" till \"to\" seconds, inclusive."
 msgstr ""
 
-#: include/classes/items/CHelpItems.php:983
+#: include/classes/items/CHelpItems.php:991
 msgid "Number of monitored hosts"
 msgstr "Số lượng host được giám sát"
 
 #: include/classes/items/CHelpItems.php:93
-#: include/classes/items/CHelpItems.php:407
+#: include/classes/items/CHelpItems.php:411
 msgid "Number of out-of-window collisions. Returns integer"
 msgstr "Số xung đột ngoài window. Trả về kiểu integer"
 
@@ -12001,15 +12008,15 @@ msgstr "Số lượng vấn đề"
 msgid "Number of problems and expand most critical one"
 msgstr "Số lượng vấn đề và mở rộng nghiêm trọng nhất"
 
-#: include/classes/items/CHelpItems.php:767
+#: include/classes/items/CHelpItems.php:775
 msgid "Number of processor cores on VMware hypervisor, <url> - VMware service URL, <uuid> - VMware hypervisor host name"
 msgstr "Số lượng lõi bộ xử lý trên VMware hypervisor, <url> - Dịch vụ VMware URL, <uuid> - tên host VMware hypervisor"
 
-#: include/classes/items/CHelpItems.php:771
+#: include/classes/items/CHelpItems.php:779
 msgid "Number of processor threads on VMware hypervisor, <url> - VMware service URL, <uuid> - VMware hypervisor host name"
 msgstr "Số lượng nhánh bộ xử lý trên VMware hypervisor, <url> - Dịch vụ VMware URL, <uuid> - tên host VMware hypervisor"
 
-#: include/classes/items/CHelpItems.php:835
+#: include/classes/items/CHelpItems.php:843
 msgid "Number of processors on VMware virtual machine, <url> - VMware service URL, <uuid> - VMware virtual machine host name"
 msgstr "Số lượng bộ xử lý trên máy ảo VMware, <url> - Dịch vụ VMware URL, <uuid> - tên host máy ảo VMware"
 
@@ -12034,15 +12041,15 @@ msgstr "Số bước"
 msgid "Number of triggers (enabled/disabled [problem/ok])"
 msgstr "Số lượng trigger (Kích hoạt/vô hiệu hóa [Problem/ok]"
 
-#: include/classes/items/CHelpItems.php:1039
+#: include/classes/items/CHelpItems.php:1047
 msgid "Number of triggers in Zabbix database."
 msgstr "Số lượng trigger trong cơ sở dữ liệu Zabbix."
 
-#: include/classes/items/CHelpItems.php:991
+#: include/classes/items/CHelpItems.php:999
 msgid "Number of unsupported items in Zabbix database."
 msgstr "Số lượng item không được hỗ trợ trong cơ sở dữ liệu Zabbix."
 
-#: include/classes/items/CHelpItems.php:967
+#: include/classes/items/CHelpItems.php:975
 msgid "Number of unsupported items on the host."
 msgstr "Số lượng item không được hỗ trợ trên máy chủ."
 
@@ -12051,44 +12058,44 @@ msgid "Number of users (online)"
 msgstr "Số lượng người dùng (trực tuyến)"
 
 #: include/classes/items/CHelpItems.php:261
-#: include/classes/items/CHelpItems.php:575
+#: include/classes/items/CHelpItems.php:579
 msgid "Number of users logged in. Returns integer"
 msgstr "Số lượng người dùng đăng nhập được. Trả về kiểu integer"
 
-#: include/classes/items/CHelpItems.php:943
+#: include/classes/items/CHelpItems.php:951
 msgid "Number of values stored in table HISTORY."
 msgstr "Số lượng giá trị được lưu trữ trong bảng HISTORY."
 
-#: include/classes/items/CHelpItems.php:947
+#: include/classes/items/CHelpItems.php:955
 msgid "Number of values stored in table HISTORY_LOG."
 msgstr "Số lượng giá trị được lưu trữ trong bảng HISTORY_LOG."
 
-#: include/classes/items/CHelpItems.php:951
+#: include/classes/items/CHelpItems.php:959
 msgid "Number of values stored in table HISTORY_STR."
 msgstr "Số lượng giá trị được lưu trữ trong bảng HISTORY_STR."
 
-#: include/classes/items/CHelpItems.php:955
+#: include/classes/items/CHelpItems.php:963
 msgid "Number of values stored in table HISTORY_TEXT."
 msgstr "Số lượng giá trị được lưu trữ trong bảng HISTORY_TEXT."
 
-#: include/classes/items/CHelpItems.php:959
+#: include/classes/items/CHelpItems.php:967
 msgid "Number of values stored in table HISTORY_UINT."
 msgstr "Số lượng giá trị được lưu trữ trong bảng HISTORY_UNIT."
 
-#: include/classes/items/CHelpItems.php:1031
+#: include/classes/items/CHelpItems.php:1039
 msgid "Number of values stored in table TRENDS."
 msgstr "Số lượng giá trị được lưu trữ trong bảng TRENDS."
 
-#: include/classes/items/CHelpItems.php:1035
+#: include/classes/items/CHelpItems.php:1043
 msgid "Number of values stored in table TRENDS_UINT."
 msgstr "Số lượng giá trị được lưu trữ trong bảng TRENDS_UNIT."
 
-#: include/classes/items/CHelpItems.php:823
+#: include/classes/items/CHelpItems.php:831
 msgid "Number of virtual machines on VMware hypervisor, <url> - VMware service URL, <uuid> - VMware hypervisor host name"
 msgstr "Số lượng máy ảo trên VMware hypervisor, <url> - dịch vụ VMware URl, <uuid> - tên host VMware hypervisor"
 
 #: include/classes/items/CHelpItems.php:313
-#: include/classes/items/CHelpItems.php:627
+#: include/classes/items/CHelpItems.php:631
 msgid "Number or percentage of inodes. Returns integer for number; float for percentage"
 msgstr "Số lượng hoặc tỷ lệ phần trăm của các nút. Trả về integer cho số; foat cho tỷ lệ phần trăm"
 
@@ -12351,7 +12358,7 @@ msgid "Opera"
 msgstr "Opera"
 
 #: include/classes/items/CHelpItems.php:233
-#: include/classes/items/CHelpItems.php:547
+#: include/classes/items/CHelpItems.php:551
 msgid "Operating system information. Returns string"
 msgstr "Thông tin hệ điều hành. Trả về kiểu string"
 
@@ -12556,7 +12563,7 @@ msgid "Others"
 msgstr "Khác"
 
 #: include/classes/items/CHelpItems.php:105
-#: include/classes/items/CHelpItems.php:419
+#: include/classes/items/CHelpItems.php:423
 msgid "Outgoing traffic statistics on network interface. Returns integer"
 msgstr "Thống kê lưu lượng truy cập đi trên interface. Trả về kiểu integer"
 
@@ -12958,7 +12965,7 @@ msgid "Percentile line (right)"
 msgstr "Đường phần trăm (phải)"
 
 #: include/classes/items/CHelpItems.php:89
-#: include/classes/items/CHelpItems.php:403
+#: include/classes/items/CHelpItems.php:407
 msgid "Performs a DNS query. Returns character string with the required type of information"
 msgstr "Thực hiện một truy vấn DNS. Trả về chuỗi ký tự với loại thông tin cần thiết"
 
@@ -13345,7 +13352,7 @@ msgid "Problems by severity"
 msgstr "Vấn đề nghiêm trọng"
 
 #: include/classes/items/CHelpItems.php:145
-#: include/classes/items/CHelpItems.php:459
+#: include/classes/items/CHelpItems.php:463
 msgid "Process CPU utilisation percentage. Returns float"
 msgstr "Xử lý phần trăm sử dụng CPU. Trả về kiểu float"
 
@@ -13935,7 +13942,7 @@ msgstr "Quyền truy cập host được yêu cầu"
 msgid "Required performance (vps)"
 msgstr "Hiệu năng cần thiết (vps)"
 
-#: include/classes/items/CHelpItems.php:1019
+#: include/classes/items/CHelpItems.php:1027
 msgid "Required performance of the Zabbix server, in new values per second expected."
 msgstr "Hiệu năng cần thiết của máy chủ Zabbix, trong các giá trị mới được dự tính trên mỗi giây."
 
@@ -14076,7 +14083,7 @@ msgid "Retrieve mode"
 msgstr "Lấy lại chế độ"
 
 #: include/classes/items/CHelpItems.php:285
-#: include/classes/items/CHelpItems.php:599
+#: include/classes/items/CHelpItems.php:603
 msgid "Retrieving contents of a file. Returns text"
 msgstr "Chỉ lấy nội dùng 1 tệp tin. Trả về kiểu text"
 
@@ -14084,49 +14091,49 @@ msgstr "Chỉ lấy nội dùng 1 tệp tin. Trả về kiểu text"
 msgid "Retry"
 msgstr "Thử lại"
 
-#: include/classes/items/CHelpItems.php:1083
+#: include/classes/items/CHelpItems.php:1091
 msgid "Return a JSON array with LLD macros describing the MBean objects or their attributes. Can be used for LLD."
 msgstr ""
 
-#: include/classes/items/CHelpItems.php:1087
+#: include/classes/items/CHelpItems.php:1095
 msgid "Return a JSON array with MBean objects or their attributes. Compared to jmx.discovery it does not define LLD macros. Can be used for LLD."
 msgstr ""
 
-#: include/classes/items/CHelpItems.php:1065
+#: include/classes/items/CHelpItems.php:1073
 msgid "Return first column of the first row of the SQL query result."
 msgstr "Trả về cột đầu tiên của hàng đầu tiên của kết quả truy vấn SQL."
 
-#: include/classes/items/CHelpItems.php:1079
+#: include/classes/items/CHelpItems.php:1087
 msgid "Return value of an attribute of MBean object."
 msgstr "Trả về giá trị của một thuộc tính của đối tượng MBean."
 
-#: include/classes/items/CHelpItems.php:683
+#: include/classes/items/CHelpItems.php:691
 msgid "Returns ICMP ping response time in seconds. Example: 0.02"
 msgstr "Trả về thời gian đáp ứng ICMP ping trong vài giây. Ví dụ: 0.02"
 
-#: include/classes/items/CHelpItems.php:975
+#: include/classes/items/CHelpItems.php:983
 msgid "Returns a JSON array describing the host network interfaces configured in Zabbix. Can be used for LLD."
 msgstr ""
 
-#: include/classes/items/CHelpItems.php:349
-#: include/classes/items/CHelpItems.php:659
-#: include/classes/items/CHelpItems.php:1023
+#: include/classes/items/CHelpItems.php:353
+#: include/classes/items/CHelpItems.php:667
+#: include/classes/items/CHelpItems.php:1031
 msgid "Returns a JSON object containing Zabbix server or proxy internal metrics."
 msgstr ""
 
-#: include/classes/items/CHelpItems.php:979
+#: include/classes/items/CHelpItems.php:987
 msgid "Returns availability of a particular type of checks on the host. Value of this item corresponds to availability icons in the host list. Valid types are: agent, snmp, ipmi, jmx."
 msgstr "Trả về tính sẵn sàng của một loại hình cụ thể của kiểm tra trên máy chủ. Giá trị của item này tương ứng với các biểu tượng có sẵn trên danh sách host. Các loại hợp lệ là: agent, snmp, ipmi, jmx."
 
-#: include/classes/items/CHelpItems.php:971
+#: include/classes/items/CHelpItems.php:979
 msgid "Returns current maintenance status of the host."
 msgstr "Trả về trạng thái bảo trì hiện tại của máy chủ."
 
-#: include/classes/items/CHelpItems.php:995
+#: include/classes/items/CHelpItems.php:1003
 msgid "Returns information associated with Zabbix Java gateway. Valid params are: ping, version."
 msgstr "Trả về thông tin liên quan đến Zabbiz Java gateway. Các tham số hợp lệ là: ping, version."
 
-#: include/classes/items/CHelpItems.php:679
+#: include/classes/items/CHelpItems.php:687
 msgid "Returns percentage of lost ICMP ping packets."
 msgstr "Trả về tỉ lệ mất gói tin ping ICMP."
 
@@ -14223,7 +14230,7 @@ msgid "Run remote commands on hosts"
 msgstr "Thực hiện lệnh từ xa trên các host"
 
 #: include/classes/items/CHelpItems.php:221
-#: include/classes/items/CHelpItems.php:535
+#: include/classes/items/CHelpItems.php:539
 msgid "Run specified command on the host. Returns text result of the command; 1 - with mode as nowait (regardless of command result)"
 msgstr "Chạy lệnh được chỉ định trên máy chủ. Trả về kết quả văn bản của lệnh; 1 - với chế độ như bây giờ (bất kể kết quả lệnh)"
 
@@ -15390,7 +15397,7 @@ msgid "Software application E"
 msgstr "Phần mềm ứng dụng E"
 
 #: include/classes/items/CHelpItems.php:229
-#: include/classes/items/CHelpItems.php:543
+#: include/classes/items/CHelpItems.php:547
 msgid "Software architecture information. Returns string"
 msgstr "Thông tin kiến trúc phần mềm. Trả về kiểu string"
 
@@ -15462,7 +15469,7 @@ msgstr "Bắt đầu"
 msgid "Starting TLS failed."
 msgstr "TLS Bắt đầu thất bại."
 
-#: include/classes/items/CHelpItems.php:939
+#: include/classes/items/CHelpItems.php:947
 msgid "Startup time of Zabbix server, Unix timestamp."
 msgstr "Thời gian bắt đầu khởi động của của máy chủ Zabbix, Unix timestamp."
 
@@ -15664,7 +15671,7 @@ msgid "Success message"
 msgstr "Tin chắn thành công"
 
 #: include/classes/items/CHelpItems.php:109
-#: include/classes/items/CHelpItems.php:423
+#: include/classes/items/CHelpItems.php:427
 msgid "Sum of incoming and outgoing traffic statistics on network interface. Returns integer"
 msgstr "Tổng số thống kê lưu lượng đến và đi trên interface. Trả về kiểu integer"
 
@@ -15694,17 +15701,17 @@ msgid "Surname"
 msgstr "Họ"
 
 #: include/classes/items/CHelpItems.php:241
-#: include/classes/items/CHelpItems.php:555
+#: include/classes/items/CHelpItems.php:559
 msgid "Swap in (from device into memory) statistics. Returns integer"
 msgstr "Trao đổi thống kê (từ thiết bị vào bộ nhớ). Trả về kiểu integer"
 
 #: include/classes/items/CHelpItems.php:245
-#: include/classes/items/CHelpItems.php:559
+#: include/classes/items/CHelpItems.php:563
 msgid "Swap out (from memory onto device) statistics. Returns integer"
 msgstr "Trao đổi thống kê (từ bộ nhớ vào thiết bị). Trả về kiểu integer"
 
 #: include/classes/items/CHelpItems.php:249
-#: include/classes/items/CHelpItems.php:563
+#: include/classes/items/CHelpItems.php:567
 msgid "Swap space size in bytes or in percentage from total. Returns integer for bytes; float for percentage"
 msgstr "Hoán đổi kích thước không gian theo byte hoặc theo tỷ lệ phần trăm từ tổng số. Trả về kiểu integer cho byte; float cho tỷ lệ phần trăm"
 
@@ -15717,7 +15724,7 @@ msgid "Switching authentication method will reset all except this session! Conti
 msgstr "Chuyển đổi phương pháp xác nhận sẽ thiết laoapj lại tất cả ngoại trừ phiến này! Tiếp tục?"
 
 #: include/classes/items/CHelpItems.php:173
-#: include/classes/items/CHelpItems.php:487
+#: include/classes/items/CHelpItems.php:491
 msgid "System boot time. Returns integer (Unix timestamp)"
 msgstr "Thời gian khởi động hệ thống. Trả về kiểu integer (đơn vị dấu thời gian)"
 
@@ -15734,7 +15741,7 @@ msgid "System error."
 msgstr "Lỗi hệ thống."
 
 #: include/classes/items/CHelpItems.php:197
-#: include/classes/items/CHelpItems.php:511
+#: include/classes/items/CHelpItems.php:515
 msgid "System host name. Returns string"
 msgstr "Tên máy chủ hệ thống. Trả về kiểu string"
 
@@ -15747,17 +15754,17 @@ msgid "System information"
 msgstr "Thông tin hệ thống"
 
 #: include/classes/items/CHelpItems.php:225
-#: include/classes/items/CHelpItems.php:539
+#: include/classes/items/CHelpItems.php:543
 msgid "System statistics. Returns integer or float"
 msgstr "Thống kê hệ thống. Trả về kiểu integer hoặc float"
 
 #: include/classes/items/CHelpItems.php:217
-#: include/classes/items/CHelpItems.php:531
+#: include/classes/items/CHelpItems.php:535
 msgid "System time. Returns integer with type as utc; string - with type as local"
 msgstr "Thời gian hệ thống. Trả về kiểu integer với kiểu như utc; string- với kiểu là cục bộ"
 
 #: include/classes/items/CHelpItems.php:257
-#: include/classes/items/CHelpItems.php:571
+#: include/classes/items/CHelpItems.php:575
 msgid "System uptime in seconds. Returns integer"
 msgstr "Thời gian chạy hệ thống tính bằng giây. Trả về kiểu integer"
 
@@ -16169,7 +16176,7 @@ msgid "The item is not discovered anymore and will be deleted the next time disc
 msgstr "Item này không được khám phá nữa và sẽ bị xóa trong lần xử lý khám phá tiếp theo."
 
 #: include/classes/items/CHelpItems.php:153
-#: include/classes/items/CHelpItems.php:467
+#: include/classes/items/CHelpItems.php:471
 msgid "The number of processes. Returns integer"
 msgstr "Số lượng các tiến trình. Trả về kiểu integer"
 
@@ -16293,11 +16300,11 @@ msgstr "Thời gian (tăng dần)"
 msgid "Time (descending)"
 msgstr "Thời gian (giảm dần)"
 
-#: include/classes/items/CHelpItems.php:999
+#: include/classes/items/CHelpItems.php:1007
 msgid "Time a particular Zabbix process or a group of processes (identified by <type> and <mode>) spent in <state> in percentage."
 msgstr "Thời gian một quy trình Zabbix cụ thể hoặc một nhóm các quy trình (được xác định bởi <type> và <mode>) được chi tiêu theo <state> theo tỷ lệ phần trăm."
 
-#: include/classes/items/CHelpItems.php:1003
+#: include/classes/items/CHelpItems.php:1011
 msgid "Time of proxy last access. Name - proxy name. Param - lastaccess. Unix timestamp."
 msgstr "Thời gian của truy cập proxy lần cuối cùng. Tên - tên proxy. Tham số - truy cập cuối cùng. Nhãn thời gian UNIX."
 
@@ -16410,11 +16417,11 @@ msgstr ""
 msgid "Transaction has not been closed. Aborting..."
 msgstr "Giao dịch chưa được đóng lại. Đang hủy bỏ..."
 
-#: include/classes/items/CHelpItems.php:1069
+#: include/classes/items/CHelpItems.php:1077
 msgid "Transform SQL query result into a JSON array for low-level discovery."
 msgstr ""
 
-#: include/classes/items/CHelpItems.php:1073
+#: include/classes/items/CHelpItems.php:1081
 msgid "Transform SQL query result into a JSON array."
 msgstr ""
 
@@ -17266,7 +17273,7 @@ msgstr "Các bản đồ ở mức cao hơn"
 msgid "Uptime"
 msgstr "Thời gian chạy"
 
-#: include/classes/items/CHelpItems.php:1043
+#: include/classes/items/CHelpItems.php:1051
 msgid "Uptime of Zabbix server process in seconds."
 msgstr "Thời gian hoạt động của tiến trình máy chủ Zabbix trong vài giây."
 
@@ -17568,212 +17575,212 @@ msgstr "Tên đăng nhập và mật khẩu"
 msgid "Users"
 msgstr "Các người dùng"
 
-#: include/classes/items/CHelpItems.php:1055
+#: include/classes/items/CHelpItems.php:1063
 msgid "VMware cache statistics. Valid modes are: total, free, pfree, used and pused."
 msgstr "Thống kê bộ nhớ VMware. Các chế độ hợp lệ: total, free, pfree, used và pused."
 
-#: include/classes/items/CHelpItems.php:703
+#: include/classes/items/CHelpItems.php:711
 msgid "VMware cluster status, <url> - VMware service URL, <name> - VMware cluster name"
 msgstr "Trạng thái VMware cluster, <url> - Dịch vụ VMware URL, <name> - Tên VMware cluster"
 
-#: include/classes/items/CHelpItems.php:719
-#: include/classes/items/CHelpItems.php:743
+#: include/classes/items/CHelpItems.php:727
+#: include/classes/items/CHelpItems.php:751
 msgid "VMware datastore capacity statistics in bytes or in percentage from total. Returns integer for bytes; float for percentage"
 msgstr "Thống kê dung lượng kho dữ liệu VMware theo byte hoặc theo tỷ lệ phần trăm trên tổng số. Trả về kiểu integer cho byte; float cho tỷ lệ phần trăm"
 
-#: include/classes/items/CHelpItems.php:727
+#: include/classes/items/CHelpItems.php:735
 msgid "VMware datastore hypervisors list, <url> - VMware service URL, <datastore> - datastore name"
 msgstr ""
 
-#: include/classes/items/CHelpItems.php:715
+#: include/classes/items/CHelpItems.php:723
 msgid "VMware datastore read statistics, <url> - VMware service URL, <datastore> - datastore name, <mode> - latency/maxlatency - average or maximum"
 msgstr ""
 
-#: include/classes/items/CHelpItems.php:723
+#: include/classes/items/CHelpItems.php:731
 msgid "VMware datastore write statistics, <url> - VMware service URL, <datastore> - datastore name, <mode> - latency/maxlatency - average or maximum"
 msgstr ""
 
-#: include/classes/items/CHelpItems.php:707
+#: include/classes/items/CHelpItems.php:715
 msgid "VMware event log, <url> - VMware service URL, <mode> - all (default), skip - skip processing of older data"
 msgstr "Log sự kiện VMware, <url> - URL dịch vụ VMware, <mode> - tất cả (mặc định), bỏ qua - bỏ qua xử lý dữ liệu cũ hơn"
 
-#: include/classes/items/CHelpItems.php:783
+#: include/classes/items/CHelpItems.php:791
 msgid "VMware hypervisor BIOS uuid, <url> - VMware service URL, <uuid> - VMware hypervisor host name"
 msgstr "VMware hypervisor BIOS uuid, <url> - Dịch vụ VMwareURL, <uuid> - Tên host VMware hypervisor"
 
-#: include/classes/items/CHelpItems.php:791
+#: include/classes/items/CHelpItems.php:799
 msgid "VMware hypervisor ballooned memory size, <url> - VMware service URL, <uuid> - VMware hypervisor host name"
 msgstr "Kích thước bộ nhớ VMware hypervisor thừa ra, <url> - Dịch vụ VMware URL, <uuid> - tên host VMware hypervisor"
 
-#: include/classes/items/CHelpItems.php:731
+#: include/classes/items/CHelpItems.php:739
 msgid "VMware hypervisor cluster name, <url> - VMware service URL, <uuid> - VMware hypervisor host name"
 msgstr "Tên VMware hypervisor cluster, <url> - Dịch vụ VMware hypervisor cluster VMware URL, <uuid> - Tên host VMware hypervisor"
 
-#: include/classes/items/CHelpItems.php:739
+#: include/classes/items/CHelpItems.php:747
 msgid "VMware hypervisor datastore read statistics, <url> - VMware service URL, <uuid> - VMware hypervisor host name, <datastore> - datastore name, <mode> - latency"
 msgstr "Kho dữ liệu đọc số liệu thống kê VMware hypervisor, <url> - Dịch vụ VMware URL, <uuid> - Tên host VMware hypervisor, <datastore> - tên kho dữ liệu, <mode> - độ trễ"
 
-#: include/classes/items/CHelpItems.php:747
+#: include/classes/items/CHelpItems.php:755
 msgid "VMware hypervisor datastore write statistics, <url> - VMware service URL, <uuid> - VMware hypervisor host name, <datastore> - datastore name, <mode> - latency"
 msgstr "Kho dữ liệu ghi số liệu thống kê VMware hypervisor, <url> - Dịch vụ VMware URL, <uuid> - Tên host VMware hypervisor, <datastore> - tên kho dữ liệu, <mode> - độ trễ"
 
-#: include/classes/items/CHelpItems.php:751
+#: include/classes/items/CHelpItems.php:759
 msgid "VMware hypervisor datastores list, <url> - VMware service URL, <uuid> - VMware hypervisor host name"
 msgstr ""
 
-#: include/classes/items/CHelpItems.php:779
+#: include/classes/items/CHelpItems.php:787
 msgid "VMware hypervisor model, <url> - VMware service URL, <uuid> - VMware hypervisor host name"
 msgstr "Mô hình VMware hypervisor, <url> - dịch vụ VMware URL, <uuid> - tên host VMware hypervisor"
 
-#: include/classes/items/CHelpItems.php:755
+#: include/classes/items/CHelpItems.php:763
 msgid "VMware hypervisor name, <url> - VMware service URL, <uuid> - VMware hypervisor host name"
 msgstr "Tên VMware hypervisor, <url> - Dịch vụ VMware URL, <uuid> - tên host VMware hypervisor"
 
-#: include/classes/items/CHelpItems.php:799
+#: include/classes/items/CHelpItems.php:807
 msgid "VMware hypervisor network input statistics, <url> - VMware service URL, <uuid> - VMware hypervisor host name, <mode> - bps"
 msgstr "Thống kê mạng đầu vào VMware hypervisor, <url> - dịch vụ VMware URL, <uuid> - tên host VMware hypervisor, <mode> - bps"
 
-#: include/classes/items/CHelpItems.php:803
+#: include/classes/items/CHelpItems.php:811
 msgid "VMware hypervisor network output statistics, <url> - VMware service URL, <uuid> - VMware hypervisor host name, <mode> - bps"
 msgstr "Thống kê mạng đầu vào VMware hypervisor, <url> - dịch vụ VMware URL, <uuid> - tên host VMware hypervisor, <mode> - bps"
 
-#: include/classes/items/CHelpItems.php:807
+#: include/classes/items/CHelpItems.php:815
 msgid "VMware hypervisor performance counter, <url> - VMware service URL, <uuid> - VMware hypervisor host name, <path> - performance counter path, <instance> - performance counter instance"
 msgstr "Theo dõi hiệu suất VMware hypervisor, <url> - dịch vụ VMware URL, <uuid> - tên host VMware hypervisor , <path> - đường dẫn theo dõi hiệu suất, <instance> - đếm số lần hiệu suất"
 
-#: include/classes/items/CHelpItems.php:759
+#: include/classes/items/CHelpItems.php:767
 msgid "VMware hypervisor processor frequency, <url> - VMware service URL, <uuid> - VMware hypervisor host name"
 msgstr "Tần số bộ xử lý VMware hypervisor, <url> - dịch vụ VMware URL, <uuid> - tên host VMware hypervisor"
 
-#: include/classes/items/CHelpItems.php:763
+#: include/classes/items/CHelpItems.php:771
 msgid "VMware hypervisor processor model, <url> - VMware service URL, <uuid> - VMware hypervisor host name"
 msgstr "Mô hình bộ xử lý VMware hypervisor, <url> - dịch vụ VMware URL, <uuid> - tên host VMware hypervisor"
 
-#: include/classes/items/CHelpItems.php:735
+#: include/classes/items/CHelpItems.php:743
 msgid "VMware hypervisor processor usage in Hz, <url> - VMware service URL, <uuid> - VMware hypervisor host name"
 msgstr "Cách sử dụng bộ xử lý VMware hypervisor đơn vị là Hz, <url> - dịch vụ VMware URL, <uuid> - tên host VMware hypervisor"
 
-#: include/classes/items/CHelpItems.php:811
+#: include/classes/items/CHelpItems.php:819
 msgid "VMware hypervisor status, <url> - VMware service URL, <uuid> - VMware hypervisor host name"
 msgstr "Trạng thái VMware hypervisor, <url> - dịch vụ VMware URL, <uuid> - tên host VMware hypervisor"
 
-#: include/classes/items/CHelpItems.php:775
+#: include/classes/items/CHelpItems.php:783
 msgid "VMware hypervisor total memory size, <url> - VMware service URL, <uuid> - VMware hypervisor host name"
 msgstr "Kích thước bộ nhớ tổng VMware hypervisor, <url> - dịch vụ VMware URL, <uuid> - tên host VMware hypervisor"
 
-#: include/classes/items/CHelpItems.php:815
+#: include/classes/items/CHelpItems.php:823
 msgid "VMware hypervisor uptime, <url> - VMware service URL, <uuid> - VMware hypervisor host name"
 msgstr "Thời gian chạy VMware hypervisor, <url> - dịch vụ VMware URL, <uuid> - tên host VMware hypervisor"
 
-#: include/classes/items/CHelpItems.php:795
+#: include/classes/items/CHelpItems.php:803
 msgid "VMware hypervisor used memory size, <url> - VMware service URL, <uuid> - VMware hypervisor host name"
 msgstr "Kích thước bộ nhớ đã sử dụng VMware hypervisor, <url> - dịch vụ VMware URL, <uuid> - tên host VMware hypervisor"
 
-#: include/classes/items/CHelpItems.php:787
+#: include/classes/items/CHelpItems.php:795
 msgid "VMware hypervisor vendor name, <url> - VMware service URL, <uuid> - VMware hypervisor host name"
 msgstr "Tên nhà sản xuất VMware hypervisor, <url> - Dịch vụ VMware URL, <uuid> - tên host VMware hypervisor"
 
-#: include/classes/items/CHelpItems.php:819
+#: include/classes/items/CHelpItems.php:827
 msgid "VMware hypervisor version, <url> - VMware service URL, <uuid> - VMware hypervisor host name"
 msgstr "Phiên bản VMware hypervisor, <url> - dịch vụ VMware URL, <uuid> - tên host VMware hypervisor"
 
-#: include/classes/items/CHelpItems.php:711
+#: include/classes/items/CHelpItems.php:719
 msgid "VMware service full name, <url> - VMware service URL"
 msgstr "tên đầy đù của dịch vụ VMware hypervisor VMware, <url> - dịch vụ VMware URL"
 
-#: include/classes/items/CHelpItems.php:827
+#: include/classes/items/CHelpItems.php:835
 msgid "VMware service version, <url> - VMware service URL"
 msgstr "Phiên bản dịch vụ VMware, <url> - dịch vụ VMware URL"
 
-#: include/classes/items/CHelpItems.php:851
+#: include/classes/items/CHelpItems.php:859
 msgid "VMware virtual machine ballooned memory size, <url> - VMware service URL, <uuid> - VMware virtual machine host name"
 msgstr "Kích thước bộ nhớ máy ảo VMware bị thừa ra, <url> - dịch vụ VMware URL, <uuid> - tên host máy ảo VMware"
 
-#: include/classes/items/CHelpItems.php:899
+#: include/classes/items/CHelpItems.php:907
 msgid "VMware virtual machine committed storage space, <url> - VMware service URL, <uuid> - VMware virtual machine host name"
 msgstr "Không gian lưu trữ máy ảo VMware được thống nhất, <url> - dịch vụ VMware URL, <uuid> - tên host máy ảo VMware"
 
-#: include/classes/items/CHelpItems.php:855
+#: include/classes/items/CHelpItems.php:863
 msgid "VMware virtual machine compressed memory size, <url> - VMware service URL, <uuid> - VMware virtual machine host name"
 msgstr "Kích thước bộ nhớ máy ảo VMware được nén lại, <url> - dịch vụ VMware URL, <uuid> - tên host máy ảo VMware"
 
-#: include/classes/items/CHelpItems.php:915
+#: include/classes/items/CHelpItems.php:923
 msgid "VMware virtual machine disk device read statistics, <url> - VMware service URL, <uuid> - VMware virtual machine host name, <instance> - disk device instance, <mode> - bps/ops - bytes/operations per second"
 msgstr "Thiết bị đĩa máy ảo VMware đọc số liệu thống kê, <url> - Dịch vụ VMware URL, <uuid> - tên host máy ảo VMware, <instance> - Số thiết bị đĩa, <mode> - bps/ops - bytes/số lần thao tác trên giây"
 
-#: include/classes/items/CHelpItems.php:919
+#: include/classes/items/CHelpItems.php:927
 msgid "VMware virtual machine disk device write statistics, <url> - VMware service URL, <uuid> - VMware virtual machine host name, <instance> - disk device instance, <mode> - bps/ops - bytes/operations per second"
 msgstr "Thiết bị đĩa máy ảo VMware ghi số liệu thống kê, <url> - dịch vụ VMware URL, <uuid> - tên host máy ảo VMware, <instance> - Số thiết bị đĩa, <mode> - bps/ops - bytes/ số lần thao tác trên giây "
 
-#: include/classes/items/CHelpItems.php:923
+#: include/classes/items/CHelpItems.php:931
 msgid "VMware virtual machine file system statistics, <url> - VMware service URL, <uuid> - VMware virtual machine host name, <fsname> - file system name, <mode> - total/free/used/pfree/pused"
 msgstr "Hệ thống tập tin máy ảo thống kê VMware, <url> - dịch vụ VMware URL, <uuid> -  tên host máy ảo VMware, <fsname> - tên hệ thống tập tin, <mode> -  total/free/used/pfree/pused"
 
-#: include/classes/items/CHelpItems.php:871
+#: include/classes/items/CHelpItems.php:879
 msgid "VMware virtual machine guest memory usage, <url> - VMware service URL, <uuid> - VMware virtual machine host name"
 msgstr "Cách sử dụng bộ nhớ máy ảo VMware của khách, <url> - dịch vụ VMware URL, <uuid> - Tên host máy ảo VMware"
 
-#: include/classes/items/CHelpItems.php:875
+#: include/classes/items/CHelpItems.php:883
 msgid "VMware virtual machine host memory usage, <url> - VMware service URL, <uuid> - VMware virtual machine host name"
 msgstr "Cách sử dụng bộ nhớ máy ảo VMware của host, <url> - dịch vụ VMware URL, <uuid> - tên host máy ảo VMware"
 
-#: include/classes/items/CHelpItems.php:847
+#: include/classes/items/CHelpItems.php:855
 msgid "VMware virtual machine hypervisor name, <url> - VMware service URL, <uuid> - VMware virtual machine host name"
 msgstr "Tên máy ảo VMware hypervisor, <url> - dịch vụ VMware URL, <uuid> - tên host máy ảo VMware"
 
-#: include/classes/items/CHelpItems.php:831
+#: include/classes/items/CHelpItems.php:839
 msgid "VMware virtual machine name, <url> - VMware service URL, <uuid> - VMware virtual machine host name"
 msgstr "Tên máy ảo VMware, <url> - dịch vụ VMware URL, <uuid> - tên host máy ảo VMware"
 
-#: include/classes/items/CHelpItems.php:883
+#: include/classes/items/CHelpItems.php:891
 msgid "VMware virtual machine network interface input statistics, <url> - VMware service URL, <uuid> - VMware virtual machine host name, <instance> - network interface instance, <mode> - bps/pps - bytes/packets per second"
 msgstr "Thống kê interface mạng đầu vào máy ảo VMware, <url> - dịch vụ VMware URL, <uuid> - tên host máy ảo VMware, <instance> - số lượng interface, <mode> - bps/pps - bytes/số lượng gói tin trên giây"
 
-#: include/classes/items/CHelpItems.php:887
+#: include/classes/items/CHelpItems.php:895
 msgid "VMware virtual machine network interface output statistics, <url> - VMware service URL, <uuid> - VMware virtual machine host name, <instance> - network interface instance, <mode> - bps/pps - bytes/packets per second"
 msgstr "Thống kê interface mạng đầu ra máy ảo VMware, <url> - dịch vụ VMware URL, <uuid> - tên host máy áo VMware, <instance> - số lượng interface, <mode> - bps/pps - bytes/số lượng gói tin trên giây"
 
-#: include/classes/items/CHelpItems.php:891
+#: include/classes/items/CHelpItems.php:899
 msgid "VMware virtual machine performance counter, <url> - VMware service URL, <uuid> - VMware virtual machine host name, <path> - performance counter path, <instance> - performance counter instance"
 msgstr "Hiệu suất truy cập máy ảo VMware, <url> - dịch vụ VMware URL, <uuid> - tên host máy ảo VMware, <path> - đường dẫn hiệu suất truy cập, <instance> - Số lượng hiệu suất truy cập"
 
-#: include/classes/items/CHelpItems.php:895
+#: include/classes/items/CHelpItems.php:903
 msgid "VMware virtual machine power state, <url> - VMware service URL, <uuid> - VMware virtual machine host name"
 msgstr "Tình trạng nguồn của máy ảo VMware, <url> - dich vụ VMware URL, <uuid> - Tên host máy ảo VMware"
 
-#: include/classes/items/CHelpItems.php:859
+#: include/classes/items/CHelpItems.php:867
 msgid "VMware virtual machine private memory size, <url> - VMware service URL, <uuid> - VMware virtual machine host name"
 msgstr "Kích thước bộ nhớ riêng của máy ảo VMware, <url> - dịch vụ VMware URL, <uuid> - tên host máy ảo VMware"
 
-#: include/classes/items/CHelpItems.php:839
+#: include/classes/items/CHelpItems.php:847
 msgid "VMware virtual machine processor ready time ms, <url> - VMware service URL, <uuid> - VMware virtual machine host name"
 msgstr "Bộ xử lý máy ảo VMware thời gian sẵn sàng ms, <url> - URL dịch vụ VMware, <uuid> - Tên máy chủ máy ảo VMware"
 
-#: include/classes/items/CHelpItems.php:843
+#: include/classes/items/CHelpItems.php:851
 msgid "VMware virtual machine processor usage in Hz, <url> - VMware service URL, <uuid> - VMware virtual machine host name"
 msgstr "Cách sử dụng bộ xử lý máy ảo VMware đơn vị Hz, <url> - Dịch vụ VMware URL, <uuid> - tên host máy ảo VMware"
 
-#: include/classes/items/CHelpItems.php:863
+#: include/classes/items/CHelpItems.php:871
 msgid "VMware virtual machine shared memory size, <url> - VMware service URL, <uuid> - VMware virtual machine host name"
 msgstr "Kích thước bộ nhớ chia sẻ của máy ảo VMware, <url> - dịch vụ VMware URL, <uuid> - tên host máy ảo VMware"
 
-#: include/classes/items/CHelpItems.php:867
+#: include/classes/items/CHelpItems.php:875
 msgid "VMware virtual machine swapped memory size, <url> - VMware service URL, <uuid> - VMware virtual machine host name"
 msgstr "Kích thước bộ nhớ máy ảo VMware được trao đổi, <url> - dịch vụ VMware URL, <uuid> - tên host máy ảo VMware"
 
-#: include/classes/items/CHelpItems.php:879
+#: include/classes/items/CHelpItems.php:887
 msgid "VMware virtual machine total memory size, <url> - VMware service URL, <uuid> - VMware virtual machine host name"
 msgstr "Kích thước bộ nhớ tổng của máy ảo VMware, <url> - dịch vụ VMware URL, <uuid> - tên host máy ảo VMware"
 
-#: include/classes/items/CHelpItems.php:903
+#: include/classes/items/CHelpItems.php:911
 msgid "VMware virtual machine uncommitted storage space, <url> - VMware service URL, <uuid> - VMware virtual machine host name"
 msgstr "Không gian lưu trữ máy ảo VMware không được thống nhất, <url> - dịch vụ VMware URL, <uuid> - tên host máy ảo VMware"
 
-#: include/classes/items/CHelpItems.php:907
+#: include/classes/items/CHelpItems.php:915
 msgid "VMware virtual machine unshared storage space, <url> - VMware service URL, <uuid> - VMware virtual machine host name"
 msgstr "Không gian lưu trữ máy ảo VMware không được chia sẻ, <url> - dịch vụ VMware URL, <uuid> - tên host máy ảo VMware"
 
-#: include/classes/items/CHelpItems.php:911
+#: include/classes/items/CHelpItems.php:919
 msgid "VMware virtual machine uptime, <url> - VMware service URL, <uuid> - VMware virtual machine host name"
 msgstr "Thời gian hoạt động của máy ảo VMware, <url> - dịch vụ VMware URL, <uuid> - tên host máy ảo VMware"
 
@@ -17864,11 +17871,11 @@ msgstr "Giá trị %2$s của %1$s có quá nhiều chữ số trước d
 msgid "Value \"%2$s\" of \"%1$s\" is too long: it cannot have more than %3$s digits before the decimal point and more than %4$s digits after the decimal point."
 msgstr "Giá trị %2$s của %1$s quá dài: nó không thể có nhiều hơn %3$s chữ số trước dấu thập phân và nhiều hơn %4$s chữ số sau dấu thập phân."
 
-#: include/classes/items/CHelpItems.php:1051
+#: include/classes/items/CHelpItems.php:1059
 msgid "Value cache effectiveness. Valid parameters are: requests, hits and misses."
 msgstr "Giá trị có hiệu lực của cache. các tham số hợp lệ là: requests, hits and misses."
 
-#: include/classes/items/CHelpItems.php:1047
+#: include/classes/items/CHelpItems.php:1055
 msgid "Value cache statistics. Valid modes are: total, free, pfree, used and pused."
 msgstr "Thống kê giá trị của cache. Các chế độ hợp lệ là: total, free, pfree, used and pused."
 
@@ -17911,7 +17918,7 @@ msgid "Value mappings for value maps will be updated!"
 msgstr "Giá trị sơ đồ sẽ được cập nhật!"
 
 #: include/classes/items/CHelpItems.php:141
-#: include/classes/items/CHelpItems.php:455
+#: include/classes/items/CHelpItems.php:459
 msgid "Value of any Windows performance counter. Returns integer, float, string or text (depending on the request)"
 msgstr "Giá trị của bất kỳ bộ đếm hiệu suất Windows. Trả về integer, float, string hoặc text (tùy theo yêu cầu)"
 
@@ -17945,7 +17952,7 @@ msgid "Variables"
 msgstr "Biến"
 
 #: include/classes/items/CHelpItems.php:157
-#: include/classes/items/CHelpItems.php:471
+#: include/classes/items/CHelpItems.php:475
 msgid "Various information about specific process(es). Returns float"
 msgstr "Thông tin khác nhau về quá trình cụ thể. Trả về kiểu float"
 
@@ -17958,7 +17965,7 @@ msgid "Verbose"
 msgstr "Chi tiết"
 
 #: include/classes/items/CHelpItems.php:73
-#: include/classes/items/CHelpItems.php:367
+#: include/classes/items/CHelpItems.php:371
 msgid "Version of Zabbix agent. Returns string"
 msgstr "Phiên bản của Zabbix agent. Trả về kiểu string"
 
@@ -17987,8 +17994,8 @@ msgstr "Xem"
 msgid "View is not rendered."
 msgstr "Xem thì không được trả về."
 
-#: include/classes/items/CHelpItems.php:325
-#: include/classes/items/CHelpItems.php:639
+#: include/classes/items/CHelpItems.php:329
+#: include/classes/items/CHelpItems.php:647
 msgid "Virtual space size in bytes or in percentage from total. Returns integer for bytes; float for percentage"
 msgstr "Kích thước không gian ảo tính bằng byte hoặc theo tỷ lệ phần trăm từ tổng số. Trả về integer cho byte; float cho tỷ lệ phần trăm"
 
@@ -18461,9 +18468,9 @@ msgstr "Bạn không ghi rõ mục tiêu cho thao tác tập lệnh action \
 #: include/classes/api/services/CHost.php:868
 #: include/classes/api/services/CIconMap.php:178
 #: include/classes/api/services/CIconMap.php:249
-#: include/classes/api/services/CMaintenance.php:514
-#: include/classes/api/services/CMaintenance.php:939
-#: include/classes/api/services/CMaintenance.php:951
+#: include/classes/api/services/CMaintenance.php:521
+#: include/classes/api/services/CMaintenance.php:953
+#: include/classes/api/services/CMaintenance.php:965
 #: include/classes/api/services/CScript.php:241
 #: include/classes/api/services/CScript.php:318
 #: include/classes/api/services/CScript.php:560
@@ -19681,8 +19688,8 @@ msgstr "Mô tả ngắn"
 #: include/classes/api/services/CItemGeneral.php:1627
 #: include/classes/api/services/CItemGeneral.php:1655
 #: include/classes/api/services/CItemGeneral.php:2237
-#: include/classes/api/services/CMaintenance.php:481
-#: include/classes/api/services/CMaintenance.php:697
+#: include/classes/api/services/CMaintenance.php:488
+#: include/classes/api/services/CMaintenance.php:711
 #: include/classes/api/services/CMediatype.php:785
 #: include/classes/api/services/CProxy.php:662
 #: include/classes/api/services/CProxy.php:786
