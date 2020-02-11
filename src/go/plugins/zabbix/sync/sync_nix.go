@@ -33,6 +33,8 @@ func getMetrics() []string {
 		"system.hw.chassis", "Chassis information.",
 		"system.hw.devices", "Listing of PCI or USB devices.",
 		"system.sw.packages", "Listing of installed packages.",
+		"net.tcp.service", "Checks if service is running and accepting TCP connections.",
+		"net.tcp.service.perf", "Checks performance of TCP service.",
 		"net.udp.service", "Checks if service is running and responding to UDP requests.",
 		"net.udp.service.perf", "Checks performance of UDP service.",
 		"system.users.num", "Number of users logged in.",
