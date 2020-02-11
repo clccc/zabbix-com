@@ -150,7 +150,7 @@ func (p *Plugin) tcpExpect(service string, ip string, port string) (result int) 
 	var err error
 	address := net.JoinHostPort(ip, port)
 
-	if conn, err = net.DialTimeout("tcp", address, time.Duration(agent.Options.Timeout)); err != nil {
+	if conn, err = net.DialTimeout("tcp", address, time.Second*time.Duration(agent.Options.Timeout)); err != nil {
 		log.Debugf("TCP expect network error: cannot connect to [%s]: %s", address, err.Error())
 		return
 	}
