@@ -145,10 +145,9 @@ func (p *Plugin) validateImap(buf []byte) int {
 	return tcpExpectFail
 }
 
-func (p *Plugin) tcpExpect(service string, ip string, port string) (result int) {
+func (p *Plugin) tcpExpect(service string, address string) (result int) {
 	var conn net.Conn
 	var err error
-	address := net.JoinHostPort(ip, port)
 
 	if conn, err = net.DialTimeout("tcp", address, time.Second*time.Duration(agent.Options.Timeout)); err != nil {
 		log.Debugf("TCP expect network error: cannot connect to [%s]: %s", address, err.Error())
@@ -169,7 +168,7 @@ func (p *Plugin) tcpExpect(service string, ip string, port string) (result int) 
 	buf := make([]byte, 2048)
 
 	for {
-		if _, err := conn.Read(buf); err == nil {
+		if _, err = conn.Read(buf); err == nil {
 			switch service {
 			case "ssh":
 				checkResult = p.validateSsh(buf, conn)
@@ -188,9 +187,6 @@ func (p *Plugin) tcpExpect(service string, ip string, port string) (result int) 
 			case "imap":
 				checkResult = p.validateImap(buf)
 				sendToClose = fmt.Sprintf("%s", "a1 LOGOUT\r\n")
-			default:
-				err = errors.New(errorInvalidFirstParam)
-				return
 			}
 
 			if checkResult == tcpExpectOk {
@@ -218,43 +214,23 @@ func (p *Plugin) tcpExpect(service string, ip string, port string) (result int) 
 
 func (p *Plugin) exportNetService(params []string) int {
 	var ip, port string
-	var useDefaultPort bool
 	service := params[0]
 
-	if len(params) == 1 {
-		ip = "127.0.0.1"
-		useDefaultPort = true
-	} else if len(params) == 2 {
-		if len(params[1]) == 0 {
-			ip = "127.0.0.1"
-		} else {
-			ip = params[1]
-		}
-		useDefaultPort = true
+	if len(params) > 1 && params[1] != "" {
+		ip = params[1]
 	} else {
-		if len(params[1]) == 0 {
-			ip = "127.0.0.1"
+		ip = "127.0.0.1"
+	}
+	if len(params) == 3 && params[2] != "" {
+		port = params[2]
+	} else {
+		if service != "pop" {
+			port = service
 		} else {
-			ip = params[1]
-		}
-		if len(params[2]) == 0 {
-			useDefaultPort = true
-		} else {
-			port = params[2]
+			port = "pop3"
 		}
 	}
-
-	if service == "pop" {
-		if useDefaultPort {
-			port = fmt.Sprintf("%d", 110)
-			useDefaultPort = false
-		}
-	}
-
-	if useDefaultPort {
-		return p.tcpExpect(service, ip, service)
-	}
-	return p.tcpExpect(service, ip, port)
+	return p.tcpExpect(service, net.JoinHostPort(ip, port))
 }
 
 func round(num float64) int {
@@ -297,9 +273,24 @@ func (p *Plugin) Export(key string, params []string, ctx plugin.ContextProvider)
 			err = errors.New(errorInvalidFirstParam)
 			return
 		}
-		if params[0] == "tcp" && (len(params) != 3 || len(params[2]) == 0) {
-			err = errors.New(errorInvalidThirdParam)
+
+		switch params[0] {
+		case "tcp":
+			if len(params) != 3 || len(params[2]) == 0 {
+				err = errors.New(errorInvalidThirdParam)
+				return
+			}
+		case "ssh", "smtp", "ftp", "pop", "nntp", "imap", "http":
+		default:
+			err = errors.New(errorInvalidFirstParam)
 			return
+		}
+
+		if len(params) == 3 && len(params[2]) != 0 {
+			if _, err = strconv.ParseUint(params[2], 10, 16); err != nil {
+				err = errors.New(errorInvalidThirdParam)
+				return
+			}
 		}
 
 		if key == "net.tcp.service" {
