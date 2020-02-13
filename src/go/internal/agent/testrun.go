@@ -34,6 +34,7 @@ func CheckMetric(metric string) (err error) {
 	defer func() {
 		if err != nil {
 			fmt.Printf("%-46s[m|ZBX_NOTSUPPORTED] [%s]\n", metric, err.Error())
+			err = nil
 		}
 	}()
 
