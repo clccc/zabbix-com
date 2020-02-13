@@ -27,7 +27,7 @@ import (
 	"strconv"
 	"time"
 
-	"zabbix.com/internal/agent"
+	"zabbix.com/pkg/conf"
 	"zabbix.com/pkg/log"
 	"zabbix.com/pkg/plugin"
 )
@@ -46,9 +46,14 @@ const (
 	tcpExpectIgnore = 1
 )
 
+type Options struct {
+	Timeout int `conf:"optional,range=1:30"`
+}
+
 // Plugin -
 type Plugin struct {
 	plugin.Base
+	options Options
 }
 
 var impl Plugin
@@ -149,7 +154,7 @@ func (p *Plugin) tcpExpect(service string, address string) (result int) {
 	var conn net.Conn
 	var err error
 
-	if conn, err = net.DialTimeout("tcp", address, time.Second*time.Duration(agent.Options.Timeout)); err != nil {
+	if conn, err = net.DialTimeout("tcp", address, time.Second*time.Duration(p.options.Timeout)); err != nil {
 		log.Debugf("TCP expect network error: cannot connect to [%s]: %s", address, err.Error())
 		return
 	}
@@ -159,7 +164,7 @@ func (p *Plugin) tcpExpect(service string, address string) (result int) {
 		return 1
 	}
 
-	if err = conn.SetReadDeadline(time.Now().Add(time.Second * time.Duration(agent.Options.Timeout))); nil != err {
+	if err = conn.SetReadDeadline(time.Now().Add(time.Second * time.Duration(p.options.Timeout))); nil != err {
 		return
 	}
 
@@ -302,6 +307,20 @@ func (p *Plugin) Export(key string, params []string, ctx plugin.ContextProvider)
 
 	/* SHOULD_NEVER_HAPPEN */
 	return nil, errors.New(errorUnsupportedMetric)
+}
+
+func (p *Plugin) Configure(global *plugin.GlobalOptions, options interface{}) {
+	if err := conf.Unmarshal(options, &p.options); err != nil {
+		p.Warningf("cannot unmarshal configuration options: %s", err)
+	}
+	if p.options.Timeout == 0 {
+		p.options.Timeout = global.Timeout
+	}
+}
+
+func (p *Plugin) Validate(options interface{}) error {
+	var o Options
+	return conf.Unmarshal(options, &o)
 }
 
 func init() {
