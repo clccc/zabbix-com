@@ -444,7 +444,7 @@ func parseConfig(root *Node, data []byte) (err error) {
 // a byte array ([]byte) with configuration file or interface{} either returned by Marshal
 // or a configuration file Unmarshaled into interface{} variable before.
 // The third is optional 'strict' parameter that forces strict validation of configuration
-// and structure fields (enabled by efault). When disabled it will unmarshal part of
+// and structure fields (enabled by default). When disabled it will unmarshal part of
 // configuration into incomplete target structures.
 func Unmarshal(data interface{}, v interface{}, args ...interface{}) (err error) {
 	rv := reflect.ValueOf(v)

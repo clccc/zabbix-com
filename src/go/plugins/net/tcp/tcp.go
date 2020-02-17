@@ -27,6 +27,7 @@ import (
 	"strconv"
 	"time"
 
+	"zabbix.com/pkg/conf"
 	"zabbix.com/pkg/log"
 	"zabbix.com/pkg/plugin"
 )
@@ -46,7 +47,8 @@ const (
 )
 
 type Options struct {
-	Timeout time.Duration `conf:"optional,range=1:30"`
+	Timeout  time.Duration `conf:"optional,range=1:30"`
+	Capacity int           `conf:"optional,range=1:100"`
 }
 
 // Plugin -
@@ -309,13 +311,17 @@ func (p *Plugin) Export(key string, params []string, ctx plugin.ContextProvider)
 }
 
 func (p *Plugin) Configure(global *plugin.GlobalOptions, options interface{}) {
+	if err := conf.Unmarshal(options, &p.options); err != nil {
+		p.Warningf("cannot unmarshal configuration options: %s", err)
+	}
 	if p.options.Timeout == 0 {
 		p.options.Timeout = time.Duration(global.Timeout)
 	}
 }
 
 func (p *Plugin) Validate(options interface{}) error {
-	return nil
+	var o Options
+	return conf.Unmarshal(options, &o)
 }
 
 func init() {
