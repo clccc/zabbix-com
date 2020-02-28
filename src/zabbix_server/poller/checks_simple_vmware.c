@@ -26,6 +26,7 @@
 #include "zbxalgo.h"
 #include "checks_simple_vmware.h"
 #include"../vmware/vmware.h"
+#include "zbxregexp.h"
 
 #define ZBX_VMWARE_DATASTORE_SIZE_TOTAL		0
 #define ZBX_VMWARE_DATASTORE_SIZE_FREE		1
@@ -662,10 +663,11 @@ out:
 	return ret;
 }
 
-static void	vmware_get_events(const zbx_vector_ptr_t *events, zbx_uint64_t eventlog_last_key, const DC_ITEM *item,
-		zbx_vector_ptr_t *add_results)
+static void	vmware_get_events(const zbx_vector_ptr_t *events, zbx_uint64_t eventlog_last_key, zbx_uint64_t *out_key,
+		const DC_ITEM *item, zbx_vector_ptr_t *regexps, const char *pattern, zbx_vector_ptr_t *add_results)
 {
-	int	i;
+	int		i;
+	int		key_change = 0;
 
 	zabbix_log(LOG_LEVEL_DEBUG, "In %s() eventlog_last_key:" ZBX_FS_UI64, __func__, eventlog_last_key);
 
@@ -675,8 +677,16 @@ static void	vmware_get_events(const zbx_vector_ptr_t *events, zbx_uint64_t event
 		const zbx_vmware_event_t	*event = (zbx_vmware_event_t *)events->values[i];
 		AGENT_RESULT			*add_result = NULL;
 
-		if (event->key <= eventlog_last_key)
+		if (event->key <= eventlog_last_key ||
+				ZBX_REGEXP_MATCH != regexp_sub_ex(regexps, event->message,pattern, ZBX_CASE_SENSITIVE,
+						NULL, NULL))
 			continue;
+
+		if (0 == key_change)
+		{
+			*out_key  = event->key;
+		}
+		key_change = 1;
 
 		add_result = (AGENT_RESULT *)zbx_malloc(add_result, sizeof(AGENT_RESULT));
 		init_result(add_result);
@@ -692,6 +702,7 @@ static void	vmware_get_events(const zbx_vector_ptr_t *events, zbx_uint64_t event
 			}
 
 			zbx_vector_ptr_append(add_results, add_result);
+
 		}
 		else
 			zbx_free(add_result);
@@ -707,10 +718,14 @@ int	check_vcenter_eventlog(AGENT_REQUEST *request, const DC_ITEM *item, AGENT_RE
 	unsigned char		skip_old;
 	zbx_vmware_service_t	*service;
 	int			ret = SYSINFO_RET_FAIL;
+	char 			*regexp;
+	zbx_vector_ptr_t	regexps;
 
 	zabbix_log(LOG_LEVEL_DEBUG, "In %s()", __func__);
 
-	if (2 < request->nparam || 0 == request->nparam)
+	zbx_vector_ptr_create(&regexps);
+
+	if (3 < request->nparam || 0 == request->nparam)
 	{
 		SET_MSG_RESULT(result, zbx_strdup(NULL, "Invalid number of parameters."));
 		goto out;
@@ -732,6 +747,21 @@ int	check_vcenter_eventlog(AGENT_REQUEST *request, const DC_ITEM *item, AGENT_RE
 		goto out;
 	}
 
+	if (NULL == (regexp = get_rparam(request, 2)))
+	{
+		regexp = "";
+	}
+	else if ('@' == *regexp)
+	{
+		DCget_expressions_by_name(&regexps, regexp + 1);
+		if (0 == regexps.values_num)
+		{
+			SET_MSG_RESULT(result, zbx_dsprintf(NULL, "Global regular expression \"%s\" does not exist.",
+					regexp + 1));
+			goto out;
+		}
+	}
+
 	zbx_vmware_lock();
 
 	if (NULL == (service = get_vmware_service(url, item->username, item->password, result, &ret)))
@@ -751,14 +781,16 @@ int	check_vcenter_eventlog(AGENT_REQUEST *request, const DC_ITEM *item, AGENT_RE
 	}
 	else if (0 < service->data->events.values_num)
 	{
-		vmware_get_events(&service->data->events, request->lastlogsize, item, add_results);
-		service->eventlog.last_key = ((const zbx_vmware_event_t *)service->data->events.values[0])->key;
+		vmware_get_events(&service->data->events, request->lastlogsize, &service->eventlog.last_key, item,
+				&regexps, regexp, add_results);
 	}
 
 	ret = SYSINFO_RET_OK;
 unlock:
 	zbx_vmware_unlock();
 out:
+	zbx_regexp_clean_expressions(&regexps);
+	zbx_vector_ptr_destroy(&regexps);
 	zabbix_log(LOG_LEVEL_DEBUG, "End of %s():%s", __func__, zbx_sysinfo_ret_string(ret));
 
 	return ret;
